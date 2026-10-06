@@ -39,7 +39,11 @@ export const partnerStatement = {
       { text: 'your facility—not around a single product.', left: 565.7 },
     ],
   } satisfies PlacedBlock,
-  squiggles: '/assets/home/partner-squiggles.svg',
+  /** Decorative lines hug the screen edges (left piece x≥0, right piece x≤1700 of the 1623px frame). */
+  squiggles: {
+    left: '/assets/home/partner-squiggles-left.svg',
+    right: '/assets/home/partner-squiggles-right.svg',
+  },
   height: sectionTops.portfolio - sectionTops.partner,
 };
 

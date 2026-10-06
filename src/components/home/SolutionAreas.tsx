@@ -9,16 +9,16 @@ interface SolutionAreasProps {
 
 export function SolutionAreas({ title, areas }: SolutionAreasProps) {
   return (
-    <section id="solutions" className="relative bg-page px-6 py-16 md:px-10 xl:h-[909px] xl:p-0">
+    <section className="relative bg-page px-6 py-16 md:px-10 xl:h-[909px] xl:p-0">
+      <img
+        src={url('/assets/home/squiggles.svg')}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute hidden xl:block xl:-left-[2px] xl:top-[99px] xl:h-[881px] xl:w-[1105px]"
+      />
       <div className="relative mx-auto max-w-[1623px] xl:h-full">
         {/* Scroll target of the hero buttons: just above the title. */}
         <span id="solutions" aria-hidden="true" className="absolute left-0 top-0 xl:top-[190px]" />
-        <img
-          src={url('/assets/home/squiggles.svg')}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute hidden xl:block xl:-left-[2px] xl:top-[99px] xl:h-[881px] xl:w-[1105px]"
-        />
         <h2
           className="m-0 text-[30px] font-semibold leading-tight text-black md:text-[40px] xl:absolute xl:left-(--x) xl:top-(--y) xl:[font-size:var(--fs)] xl:[font-weight:var(--fw)] xl:[line-height:var(--lh)]"
           style={{ '--x': `${solutionsTitle.lines[0]!.left}px`, '--y': `${solutionsTitle.top - sectionTops.solutions}px`, '--fs': `${solutionsTitle.size}px`, '--fw': solutionsTitle.weight, '--lh': `${solutionsTitle.lh}px` } as React.CSSProperties}
