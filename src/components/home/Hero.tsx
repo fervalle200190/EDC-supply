@@ -14,6 +14,38 @@ interface HeroProps {
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+function Backdrop({ slide, eager, mirror = false }: { slide: HeroSlide; eager: boolean; mirror?: boolean }) {
+  return (
+    <div
+      aria-hidden={mirror || undefined}
+      className={cn(
+        'absolute inset-y-0 overflow-hidden',
+        mirror
+          ? // Frame left edge = max(0px,(100%-1623px)/2). Written out in full so Tailwind can see the classes.
+            'hidden xl:block xl:right-[calc(100%-max(0px,calc((100%-1623px)/2)))] xl:w-[calc(100%-max(0px,calc((100%-1623px)/2)))] xl:[transform:scaleX(-1)]'
+          : 'inset-x-0 xl:left-[max(0px,calc((100%-1623px)/2))] xl:right-0',
+      )}
+    >
+      <img
+        src={url(slide.image)}
+        alt=""
+        loading={eager ? 'eager' : 'lazy'}
+        className={cn('h-full w-full object-cover', slide.overlay ? 'max-md:object-[68%_center] xl:w-[max(1620px,100%)]' : 'max-md:object-[82%_center] md:object-left xl:w-full')}
+      />
+      {slide.overlay ? (
+        // Clipped to the hero box: every slide must occupy exactly the same area (no overlay tail under slide 1).
+        <div className="absolute inset-x-0 top-0 hidden h-full overflow-hidden md:block xl:-ml-px xl:h-[617px] xl:w-[max(1640px,100%)]">
+          <img src={url(assets.home.heroOverlay)} alt="" className="h-full w-full object-fill max-md:opacity-90 xl:-mt-[27px] xl:h-[652px]" />
+        </div>
+      ) : null}
+      {/* Extra navy under the copy: slide 1's bare photo is brighter than the other slides' baked-in gradient. */}
+      {slide.overlay ? (
+        <div aria-hidden="true" className="absolute inset-y-0 left-0 hidden w-[min(1000px,100%)] md:block xl:w-[1000px] [background:linear-gradient(90deg,rgb(13_49_71/0.55)_0%,rgb(13_49_71/0.5)_55%,rgb(13_49_71/0)_100%)]" />
+      ) : null}
+    </div>
+  );
+}
+
 export function Hero({ slides, interval = 6000 }: HeroProps) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -52,25 +84,12 @@ export function Hero({ slides, interval = 6000 }: HeroProps) {
               active ? 'z-10 opacity-100' : 'pointer-events-none z-0 opacity-0',
             )}
           >
+            {/* On screens wider than the 1623px frame the picture starts at the frame's left edge, so the dark gradient always
+                sits behind the copy. The strip to its left is a mirrored copy of the picture, which keeps the colours seamless. */}
             <div className="absolute inset-0 -z-20 overflow-hidden">
-              <img
-                src={url(slide.image)}
-                alt=""
-                loading={i === 0 ? 'eager' : 'lazy'}
-                className={cn('h-full w-full object-cover', slide.overlay ? 'max-md:object-[68%_center] xl:w-[max(1620px,100%)]' : 'max-md:object-[82%_center] md:object-left xl:w-full')}
-              />
+              <Backdrop slide={slide} eager={i === 0} />
+              <Backdrop slide={slide} eager={i === 0} mirror />
             </div>
-            {slide.overlay ? (
-              // Clipped to the hero box: every slide must occupy exactly the same area (no overlay tail under slide 1).
-              <div className="absolute inset-x-0 top-0 -z-10 hidden h-full overflow-hidden md:block xl:left-[2px] xl:h-[617px] xl:w-[max(1640px,calc(100%-2px))]">
-                <img
-                  src={url(assets.home.heroOverlay)}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-full w-full object-fill max-md:opacity-90 xl:-mt-[27px] xl:h-[652px]"
-                />
-              </div>
-            ) : null}
             <div aria-hidden="true" className="absolute inset-0 -z-10 bg-navy/55 max-md:bg-gradient-to-t max-md:from-navy/95 max-md:via-navy/60 max-md:to-navy/15 xl:hidden" />
 
             <div className="relative mx-auto flex min-h-[calc(88svh-84px)] max-w-[1623px] flex-col justify-end px-6 pb-24 pt-20 md:block md:min-h-[520px] md:px-10 md:pb-32 md:pt-28 xl:h-[617px] xl:min-h-0 xl:p-0">

@@ -28,7 +28,7 @@ export function SolutionAreas({ title, areas }: SolutionAreasProps) {
         {/* Four equal columns on the same 131px–1494px content grid as the headings and the footer. */}
         <ul className="m-0 mt-8 grid list-none grid-cols-1 gap-6 p-0 sm:grid-cols-2 xl:absolute xl:left-[131px] xl:top-[351px] xl:mt-0 xl:w-[1363px] xl:grid-cols-4 xl:gap-8">
           {areas.map((a) => (
-            <li key={a.title.join(' ')} className="flex flex-col rounded-[40px] bg-card px-[32px] pt-10 max-xl:gap-6 xl:h-[453px] xl:pt-[66px]">
+            <li key={a.title.join(' ')} className="relative flex flex-col rounded-[40px] bg-card px-[32px] pt-10 transition-[transform,box-shadow] duration-300 ease-out hover:z-10 hover:scale-[1.05] hover:shadow-[0_18px_40px_rgba(13,49,71,0.28)] motion-reduce:transition-none motion-reduce:hover:scale-100 max-xl:gap-6 xl:h-[453px] xl:pt-[66px]">
               <div>
                 <h3 className="m-0 text-[23.6px] font-normal leading-[26px] text-black">
                   {a.title.map((line, k) => (
