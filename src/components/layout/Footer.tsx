@@ -21,7 +21,7 @@ interface FooterProps {
 
 export function Footer({ offsetX = 0, geometry = defaultFooterGeometry }: FooterProps) {
   return (
-    <footer className="bg-navy text-white" style={{ '--fx': `${offsetX}px`, '--fh': `${geometry.height}px`, '--hr': `${geometry.hrTop}px`, '--cr': `${geometry.copyrightTop}px`, '--fy': `${59 + geometry.shiftY}px` } as React.CSSProperties}>
+    <footer className="bg-navy text-white shadow-[0_2px_0_0_var(--color-navy)]" style={{ '--fx': `${offsetX}px`, '--fh': `${geometry.height}px`, '--hr': `${geometry.hrTop}px`, '--cr': `${geometry.copyrightTop}px`, '--fy': `${59 + geometry.shiftY}px` } as React.CSSProperties}>
       <div className="mx-auto max-w-[1623px] px-6 pb-8 pt-12 md:px-10 xl:relative xl:h-(--fh) xl:p-0">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:ml-[calc(131px+var(--fx))] xl:grid-cols-[310px_368px_375px_1fr] xl:gap-0 xl:pt-(--fy)">
           {footerColumns.map((column) => (
