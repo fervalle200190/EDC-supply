@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { AboutHero } from '@/components/about/AboutHero';
+import { StrategicPartner } from '@/components/about/StrategicPartner';
+import { MissionVision } from '@/components/about/MissionVision';
+import { BasedInFlorida } from '@/components/about/BasedInFlorida';
+import { TrustedBy } from '@/components/about/TrustedBy';
+import {
+  aboutHero,
+  basedInFlorida,
+  decor,
+  missionVision,
+  rightTechnology,
+  strategicPartner,
+  trustedBy,
+} from '@/data/about';
+---
+
+<BaseLayout title="About Us | EDC Supply">
+  <AboutHero {...aboutHero} />
+  <StrategicPartner partner={strategicPartner} technology={rightTechnology} decor={decor} />
+  <MissionVision {...missionVision} />
+  <BasedInFlorida {...basedInFlorida} />
+  <TrustedBy {...trustedBy} />
+</BaseLayout>

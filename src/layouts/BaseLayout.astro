@@ -1,0 +1,63 @@
+---
+import { url, stripBase } from '@/lib/url';
+import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { Header } from '@/components/layout/Header';
+import { Footer, type FooterGeometry } from '@/components/layout/Footer';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Extra space under the header on desktop (px): About's frame starts 4px lower than the others. */
+  topGap?: number;
+  /** Horizontal nudge of the footer content in design px. */
+  footerOffset?: number;
+  /** Vertical geometry of the footer (pages drawn with a slightly different footer). */
+  footerGeometry?: FooterGeometry;
+  /** Page-coloured strip under the footer (the Home frame is 4px taller than its content). */
+  bottomGap?: number;
+}
+
+const { title, description = 'EDC Supply – power quality and energy reliability solutions.', topGap = 0, footerOffset = 0, footerGeometry, bottomGap = 0 } = Astro.props;
+const currentPath = stripBase(Astro.url.pathname);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <ClientRouter />
+    <script is:inline src={url('/scripts/reveal.js')}></script>
+    <script is:inline>
+      // Desktop layouts are drawn on a 1623px frame. On screens narrower than STAGE px the whole page is scaled
+      // down proportionally (CSS zoom), so a laptop sees the design at a comfortable size. Tune STAGE to taste.
+      (function () {
+        var STAGE = 1800;
+        var set = function () {
+          var w = document.documentElement.clientWidth;
+          var z = window.__STAGE_ZOOM_OFF__ ? 1 : Math.min(1, w / STAGE);
+          document.documentElement.style.setProperty('--site-zoom', String(z));
+        };
+        set();
+        if (window.__zoomInit) return;
+        window.__zoomInit = true;
+        addEventListener('resize', set);
+        // The router replaces <html> attributes on every navigation: re-apply the zoom before the new page paints.
+        document.addEventListener('astro:after-swap', set);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="site-stage">
+    <Header client:load currentPath={currentPath} transition:animate="none" />
+    <main transition:animate="fade" class="xl:pt-(--gap)" style={{ '--gap': `${topGap}px` }}>
+      <slot />
+    </main>
+    <Footer offsetX={footerOffset} geometry={footerGeometry} transition:animate="none" />
+    <div aria-hidden="true" class="bg-page" style={{ height: `${bottomGap}px` }}></div>
+    </div>
+  </body>
+</html>

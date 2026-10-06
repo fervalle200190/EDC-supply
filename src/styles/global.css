@@ -1,0 +1,166 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/montserrat';
+
+@theme {
+  --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-page: #f2f2f2;
+  --color-navy: #0d3147;
+  --color-teal-band: #91b7c0;
+  --color-green: #2a6b55;
+  --color-card: #e6e6e6;
+  --color-accent: #307c8e;
+  --color-muted: #666666;
+
+  /* Design frames are 1623px wide; breakpoints keep that as the "desktop" reference. */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background: var(--color-page);
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    margin: 0;
+    min-width: 320px;
+    overflow-x: hidden;
+  }
+  img {
+    display: block;
+    max-width: none;
+  }
+}
+
+/* Scale the desktop frame down on laptop viewports (see the STAGE script in BaseLayout). */
+@media (min-width: 1280px) {
+  .site-stage {
+    zoom: var(--site-zoom, 1);
+  }
+}
+
+/* Partner logo marquee: the track holds 4 copies of the list and slides left by exactly one, then loops seamlessly. */
+@keyframes marquee-left {
+  to {
+    transform: translateX(-25%);
+  }
+}
+.marquee {
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  width: max-content;
+  animation: marquee-left 40s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Product pages: absolute boxes are measured on the 1623px design frame. On wider layouts the frame is centred
+   (`stage-x`), while full-bleed backgrounds start at the screen edge (plain `left: var(--x)`). */
+@media (min-width: 1280px) {
+  .stage-x {
+    left: calc(max(0px, (100% - 1623px) / 2) + var(--x));
+  }
+}
+
+/* In-page anchors ("Explore Our Solutions" → #solutions) glide instead of jumping. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Glass cards: a soft light streak sweeps across on hover (About → Mission / Vision). */
+.glass-shine {
+  overflow: hidden;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.glass-shine::after {
+  content: '';
+  position: absolute;
+  inset: -20% 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.65) 50%, transparent 62%);
+  transform: translateX(-130%);
+}
+.glass-shine:hover {
+  box-shadow: 0 14px 40px rgb(13 49 71 / 0.18);
+  border-color: rgb(48 124 142 / 0.9);
+}
+.glass-shine:hover::after {
+  transform: translateX(130%);
+  transition: transform 1s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-shine:hover::after {
+    transition: none;
+    transform: translateX(-130%);
+  }
+}
+
+/* Portfolio + closing CTA background. The desktop gradient is measured in px from the Figma frame; on smaller
+   screens the section is shorter, so the fade is proportional and always ends on the footer's navy. */
+.portfolio-bg {
+  background: linear-gradient(to bottom, #f2f2f2 0%, #f2f2f2 34%, #c9d0d4 46%, #8495a0 62%, #4a6577 80%, #0d3147 100%);
+}
+@media (min-width: 1280px) {
+  .portfolio-bg {
+    background: var(--bg-desktop);
+  }
+}
+
+/* ───────── Scroll reveal (driven by /scripts/reveal.js) ─────────
+   Hidden only while the script is active and the element is waiting to enter the viewport. */
+html.rv-on [data-rv]:not([data-rv-in]) {
+  opacity: 0;
+}
+[data-rv][data-rv-in] {
+  animation: rv-up 0.95s cubic-bezier(0.22, 0.8, 0.28, 1) var(--rv-d, 0ms) both;
+}
+[data-rv='fade'][data-rv-in] {
+  animation-name: rv-fade;
+  animation-duration: 1.2s;
+}
+@keyframes rv-up {
+  from {
+    opacity: 0;
+    translate: 0 34px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes rv-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Page entrance: the hero and the logo strip fade in as the page arrives. */
+html.rv-on [aria-label='Featured'] {
+  animation: rv-fade 1s ease-out both;
+}
+html.rv-on .marquee {
+  animation: rv-fade 1.2s ease-out 0.25s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.rv-on [aria-label='Featured'],
+  html.rv-on .marquee {
+    animation: none;
+  }
+}

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Hero } from '@/components/home/Hero';
+import { PartnersStrip } from '@/components/home/PartnersStrip';
+import { WhyPartner } from '@/components/home/WhyPartner';
+import { FlagshipBanner } from '@/components/home/FlagshipBanner';
+import { SolutionAreas } from '@/components/home/SolutionAreas';
+import { PortfolioCarousel } from '@/components/home/PortfolioCarousel';
+import { PartnerStatement } from '@/components/home/PartnerStatement';
+import {
+  flagship,
+  heroSlides,
+  partners,
+  portfolioItems,
+  portfolioTitle,
+  solutionAreas,
+  solutionsTitle,
+  whyItems,
+  whyTitle,
+} from '@/data/home';
+---
+
+<BaseLayout title="EDC Supply | Engineered Reliability for Critical Operations" footerOffset={-3} bottomGap={4}>
+  <Hero client:load slides={heroSlides} />
+  <PartnersStrip partners={partners} />
+  <WhyPartner title={whyTitle} items={whyItems} />
+  <FlagshipBanner {...flagship} />
+  <SolutionAreas title={solutionsTitle} areas={solutionAreas} />
+  <PartnerStatement />
+  <PortfolioCarousel client:load title={portfolioTitle} items={portfolioItems} />
+</BaseLayout>
