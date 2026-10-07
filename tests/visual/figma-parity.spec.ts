@@ -20,8 +20,8 @@ const allPages = [
   { name: 'home', route: '/', reference: 'home.png', max: 0.04 },
   { name: 'about', route: '/about', reference: 'about.png', max: 0.04 },
   { name: 'contact', route: '/contact', reference: 'contact.png', max: 0.04 },
-  // /products is not matched pixel for pixel any more: each product sits in its own centred card (Figma comment), so only
-  // its responsive baselines below guard the layout.
+  // /products and the product pages are not matched pixel for pixel any more: products are centred in their own column and the
+  // key features fill the viewport height (Figma comments), so their page height depends on the screen. Responsive baselines below guard them.
   { name: 'products', route: '/products', reference: 'products.png', max: 1, parity: false },
   ...[
     'surge-protection-devices',
@@ -32,7 +32,7 @@ const allPages = [
     'fire-pump-controllers',
     'nickel-cadmium-and-lead-acid-batteries',
     'machine-health-monitoring',
-  ].map((slug, i) => ({ name: `product-${i + 1}`, route: `/products/${slug}`, reference: `product-${i + 1}.png`, max: 0.02 })),
+  ].map((slug, i) => ({ name: `product-${i + 1}`, route: `/products/${slug}`, reference: `product-${i + 1}.png`, max: 0.02, parity: false })),
 ];
 
 /** Only pages whose Figma reference screenshot exists in the repo are tested (lets a partial checkout run). */

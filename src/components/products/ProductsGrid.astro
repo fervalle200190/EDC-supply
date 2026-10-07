@@ -21,7 +21,7 @@ import { placed } from './layout';
     <Txt spec={L.heroTitle} as="h1" centered className="relative text-[36px] font-bold leading-tight text-page md:text-[56px]" />
   </section>
 
-  <!-- Catalogue: every product sits in its own centred card, so images, titles and links share the same axes. -->
+  <!-- Catalogue: every product is centred in its own column, so images, titles and links share the same axes. -->
   <section aria-label="Products" class="px-6 py-12 md:px-10 xl:px-0 xl:pb-[160px] xl:pt-[135px] [container-type:inline-size]">
     <h2 class="m-0 mb-10 text-center text-[26px] font-bold leading-tight text-black md:text-[34px] xl:mb-[96px] xl:text-[38px] xl:leading-[42px]">
       {L.heading.lines.map((line, i) => <Fragment>{i > 0 && <br />}{line}</Fragment>)}
@@ -34,15 +34,15 @@ import { placed } from './layout';
             <li class="flex w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] xl:w-[calc((100%-80px)/3)]">
               <a
                 href={url(productHref(item.slug))}
-                class="flex w-full flex-col items-center rounded-[24px] bg-white px-6 pb-9 pt-8 text-center text-black no-underline shadow-[0_4px_22px_rgba(13,49,71,0.07)] transition-[scale,box-shadow] duration-300 ease-out hover:scale-[1.04] hover:shadow-[0_20px_44px_rgba(13,49,71,0.18)] focus-visible:scale-[1.04] motion-reduce:transition-none motion-reduce:hover:scale-100"
+                class="flex w-full flex-col items-center px-6 pb-9 pt-8 text-center text-black no-underline transition-[scale] duration-300 ease-out hover:scale-[1.05] focus-visible:scale-[1.05] motion-reduce:transition-none motion-reduce:hover:scale-100"
               >
-                <span class="flex h-[240px] w-full items-center justify-center xl:h-[clamp(270px,20cqw,400px)]">
+                <span class="flex h-[240px] w-full items-center justify-center xl:h-[clamp(330px,25cqw,500px)]">
                   <img
                     src={url(item.image.src)}
                     alt={product.nameLines.join(' ')}
                     width={item.image.w}
                     height={item.image.h}
-                    class="h-full w-auto max-w-[80%] object-contain"
+                    class="h-full w-auto max-w-[92%] object-contain"
                   />
                 </span>
                 <h3 class="m-0 mt-6 text-[22px] font-bold leading-[1.15] xl:text-[clamp(22px,1.7cqw,30px)]">

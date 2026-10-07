@@ -16,6 +16,12 @@ const L = productPageLayouts[slug];
 if (!L) throw new Error(`No layout for product: ${slug}`);
 const { hero } = L;
 
+// Desktop: the hero keeps the design's coordinates, the features get a full-viewport section of their own, and the
+// showcase + "Keep exploring" block (still measured on the frame) is re-based so it starts right under that section.
+const heroBottom = hero.photo.y + hero.photo.h;
+const featuresBottom = Math.max(...L.features.map((f) => f.description.top + f.description.lines.length * f.description.lh));
+const restTop = Math.round(featuresBottom + 60);
+
 // Only the templates the carousel can need (every product except this one).
 const templates = Object.fromEntries(products.filter((p) => p.slug !== slug).map((p) => [p.slug, cardTemplates[p.slug]]));
 
@@ -27,7 +33,7 @@ const zoomable = 'transition-transform duration-300 ease-out hover:scale-[1.05] 
 const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-h-none xl:max-w-none';
 ---
 
-<div class="relative xl:h-(--h) xl:[overflow-x:clip]" style={{ '--h': `${L.footerTop - STAGE_TOP}px` }}>
+<div class="relative xl:[overflow-x:clip]" style={{ '--hh': `${heroBottom - STAGE_TOP}px`, '--h': `${L.footerTop - STAGE_TOP}px`, '--ctop': `${STAGE_TOP - restTop}px`, '--ch': `${L.footerTop - restTop}px` }}>
   <!-- Hero -->
   <section class="relative isolate flex flex-col items-center gap-6 overflow-hidden bg-navy px-6 py-16 text-center md:px-10 md:py-24 xl:contents">
     {
@@ -62,18 +68,25 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
     </a>
   </section>
 
-  <!-- Features -->
-  <section aria-label="Key features" class="grid gap-12 px-6 py-12 md:grid-cols-3 md:px-10 xl:contents">
-    {
-      L.features.map((f) => (
-        <article class="flex flex-col items-center text-center xl:contents">
-          <img src={url(f.icon.src)} alt="" width={f.icon.w} height={f.icon.h} class={`h-24 w-24 ${abs} xl:object-fill`} style={placed(f.icon)} />
-          <Txt spec={f.heading} as="h2" centered className="mt-5 text-[20px] font-semibold leading-tight text-black" />
-          <Txt spec={f.description} centered className="mt-3 max-w-[420px] text-[18px] font-normal leading-[1.35] text-black" />
-        </article>
-      ))
-    }
+  <div aria-hidden="true" class="hidden xl:block xl:h-(--hh)"></div>
+
+  <!-- Features: a section of its own that fills the viewport height, content centred on both axes -->
+  <section aria-label="Key features" class="grid gap-12 px-6 py-12 md:grid-cols-3 md:px-10 xl:flex xl:min-h-[calc(100svh/var(--site-zoom,1))] xl:items-center xl:justify-center xl:px-0 xl:py-16 [container-type:inline-size]">
+    <div class="contents xl:grid xl:w-[min(1320px,86cqw)] xl:grid-cols-3 xl:items-start xl:gap-[clamp(40px,5cqw,110px)]">
+      {
+        L.features.map((f) => (
+          <article class="flex flex-col items-center text-center">
+            <img src={url(f.icon.src)} alt="" width={f.icon.w} height={f.icon.h} class="h-24 w-24 object-contain xl:h-[clamp(130px,11cqw,210px)] xl:w-[clamp(130px,11cqw,210px)]" />
+            <h2 class="m-0 mt-5 text-[20px] font-semibold leading-tight text-black xl:mt-[clamp(28px,2.6cqw,48px)] xl:text-[clamp(20px,1.55cqw,28px)]">{f.heading.lines.join(' ')}</h2>
+            <p class="m-0 mt-3 max-w-[420px] text-[18px] font-normal leading-[1.35] text-black xl:mt-[clamp(14px,1.4cqw,26px)] xl:max-w-[clamp(300px,25cqw,470px)] xl:text-[clamp(18px,1.35cqw,25px)]">{f.description.lines.join(' ')}</p>
+          </article>
+        ))
+      }
+    </div>
   </section>
+
+  <div class="contents xl:relative xl:block xl:h-(--ch)">
+  <div class="contents xl:absolute xl:inset-x-0 xl:top-(--ctop) xl:block xl:h-(--h)">
 
   <!-- Product showcase -->
   <section aria-label="Product range" class="flex flex-wrap items-center justify-center gap-4 px-6 py-8 xl:contents">
@@ -93,4 +106,6 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
     <Txt spec={L.explore} as="h2" style={{ '--fs': '29px' }} className="mb-8 px-6 text-[22px] font-medium leading-tight text-black md:px-10 md:text-[26px]" />
     <RelatedCarousel client:visible slug={slug} carousel={L.carousel} templates={templates} />
   </section>
+  </div>
+  </div>
 </div>
