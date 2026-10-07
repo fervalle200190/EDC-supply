@@ -11,12 +11,15 @@ interface HeaderProps {
   currentPath?: string;
   /** Desktop height in design px. */
   height?: number;
+  /** "dark": navy bar with white copy (the Contact frame). Phones keep the light menu curtain. */
+  variant?: 'light' | 'dark';
 }
 
 const isActive = (current: string | undefined, href: string) =>
   current !== undefined && (href === '/' ? current === '/' : current.startsWith(href));
 
-export function Header({ currentPath, height = HEADER_HEIGHT }: HeaderProps) {
+export function Header({ currentPath, height = HEADER_HEIGHT, variant = 'light' }: HeaderProps) {
+  const dark = variant === 'dark';
   const [open, setOpen] = useState(false);
 
   // Esc closes the mobile menu.
@@ -34,15 +37,15 @@ export function Header({ currentPath, height = HEADER_HEIGHT }: HeaderProps) {
   });
 
   return (
-    <header className="relative bg-page xl:h-(--hh)" style={{ '--hh': `${height}px` } as React.CSSProperties}>
-      <div className="mx-auto flex h-[84px] max-w-[1623px] items-center justify-between px-6 md:px-10 xl:h-full xl:items-center xl:pl-[80px] xl:pr-[94px]">
+    <header className={`relative xl:h-(--hh) ${dark ? 'bg-navy' : 'bg-page'}`} style={{ '--hh': `${height}px` } as React.CSSProperties}>
+      <div className={`mx-auto flex h-[84px] max-w-[1623px] items-center justify-between px-6 md:px-10 xl:h-full xl:items-center ${dark ? 'xl:pl-[72px] xl:pr-[136px]' : 'xl:pl-[80px] xl:pr-[94px]'}`}>
         <a href={url('/')} aria-label="EDC Supply – Power Solutions" className="block">
-          <img src={url(assets.logo)} alt="EDC Supply Power Solutions" width={151} height={43} className="h-[38px] w-auto xl:h-[43px]" />
+          <img src={url(assets.logo)} alt="EDC Supply Power Solutions" width={151} height={43} className={`h-[38px] w-auto ${dark ? 'brightness-0 invert xl:h-[40px]' : 'xl:h-[43px]'}`} />
         </a>
 
         <button
           type="button"
-          className="grid size-11 place-items-center rounded-full text-navy xl:hidden"
+          className={`grid size-11 place-items-center rounded-full xl:hidden ${dark ? 'text-white' : 'text-navy'}`}
           aria-expanded={open}
           aria-controls="primary-nav"
           aria-label={open ? 'Close menu' : 'Open menu'}
@@ -63,10 +66,11 @@ export function Header({ currentPath, height = HEADER_HEIGHT }: HeaderProps) {
             // Mobile/tablet: a curtain that drops from the header (clip-path + fade), always mounted so it can animate.
             'absolute inset-x-0 top-full z-20 flex flex-col gap-1 bg-page px-6 pb-6 pt-2 shadow-md transition-[opacity,clip-path,visibility,translate] duration-500 ease-[cubic-bezier(0.22,0.8,0.28,1)] motion-reduce:transition-none md:px-10',
             open ? 'visible translate-y-0 opacity-100 [clip-path:inset(0_0_-48px_0)]' : 'invisible -translate-y-2 opacity-0 [clip-path:inset(0_0_100%_0)]',
+            dark ? 'xl:translate-y-[2px]' : '',
             'xl:visible xl:static xl:z-auto xl:flex xl:translate-y-0 xl:flex-row xl:items-center xl:gap-0 xl:bg-transparent xl:p-0 xl:opacity-100 xl:shadow-none xl:transition-none xl:[clip-path:none]',
           ].join(' ')}
         >
-          <ul className="m-0 flex list-none flex-col gap-1 p-0 xl:flex-row xl:gap-[54px]">
+          <ul className={`m-0 flex list-none flex-col gap-1 p-0 xl:flex-row ${dark ? 'xl:gap-[62px]' : 'xl:gap-[54px]'}`}>
             {navItems.map((item, i) => (
               <li key={item.href} {...row(i)}>
                 <a
@@ -75,7 +79,7 @@ export function Header({ currentPath, height = HEADER_HEIGHT }: HeaderProps) {
                   data-text={item.label}
                   aria-current={isActive(currentPath, item.href) ? 'page' : undefined}
                   // The invisible bold copy (::after) reserves the bold width, so selecting an item never shifts the nav.
-                  className="flex flex-col py-3 text-[20.2px] font-medium leading-none text-navy no-underline after:invisible after:block after:h-0 after:overflow-hidden after:font-bold after:content-[attr(data-text)] aria-[current=page]:font-bold xl:py-0"
+                  className={`flex flex-col py-3 text-[20.2px] font-medium leading-none text-navy no-underline ${dark ? 'xl:text-white' : ''} after:invisible after:block after:h-0 after:overflow-hidden after:font-bold after:content-[attr(data-text)] aria-[current=page]:font-bold xl:py-0`}
                 >
                   {item.label}
                 </a>
@@ -83,10 +87,11 @@ export function Header({ currentPath, height = HEADER_HEIGHT }: HeaderProps) {
             ))}
           </ul>
           <div {...row(navItems.length)} className={`mt-2 xl:ml-[45px] xl:mt-0 ${row(navItems.length).className}`}>
-            <Button href={url(contactCta.href)} className="h-[41px] w-[150px] text-[20.2px] leading-none">
+            <Button href={url(contactCta.href)} className={`w-[150px] text-[20.2px] leading-none ${dark ? 'h-[43px] xl:bg-page xl:text-navy' : 'h-[41px]'}`}>
               {contactCta.label}
             </Button>
           </div>
+          {dark ? null : (
           <a
             href={whatsapp.href}
             aria-label={whatsapp.label}
@@ -95,6 +100,7 @@ export function Header({ currentPath, height = HEADER_HEIGHT }: HeaderProps) {
           >
             <img src={url(assets.whatsapp)} alt="" width={40} height={37} className="h-[37px] w-[40px] object-contain" />
           </a>
+          )}
         </nav>
       </div>
     </header>

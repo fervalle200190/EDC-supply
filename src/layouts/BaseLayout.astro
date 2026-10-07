@@ -16,9 +16,13 @@ interface Props {
   footerGeometry?: FooterGeometry;
   /** Page-coloured strip under the footer (the Home frame is 4px taller than its content). */
   bottomGap?: number;
+  /** Navy header with white copy (Contact). */
+  headerVariant?: 'light' | 'dark';
+  /** Desktop header height in design px (Contact's frame is drawn with a taller bar). */
+  headerHeight?: number;
 }
 
-const { title, description = 'EDC Supply – power quality and energy reliability solutions.', topGap = 0, footerOffset = 0, footerGeometry, bottomGap = 0 } = Astro.props;
+const { title, description = 'EDC Supply – power quality and energy reliability solutions.', topGap = 0, footerOffset = 0, footerGeometry, bottomGap = 0, headerVariant = 'light', headerHeight } = Astro.props;
 const currentPath = stripBase(Astro.url.pathname);
 ---
 
@@ -52,7 +56,7 @@ const currentPath = stripBase(Astro.url.pathname);
   </head>
   <body>
     <div class="site-stage">
-    <Header client:load currentPath={currentPath} transition:animate="none" />
+    <Header client:load currentPath={currentPath} variant={headerVariant} height={headerHeight} transition:animate="none" />
     <main transition:animate="fade" class="xl:pt-(--gap)" style={{ '--gap': `${topGap}px` }}>
       <slot />
     </main>

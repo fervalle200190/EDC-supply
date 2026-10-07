@@ -1,0 +1,13 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { ContactHero } from '@/components/contact/ContactHero';
+import { ContactForm } from '@/components/contact/ContactForm';
+import { contactEndpoint, contactHero } from '@/data/contact';
+import { url } from '@/lib/url';
+import { defaultFooterGeometry } from '@/components/layout/Footer';
+---
+
+<BaseLayout title="Contact Us | EDC Supply" description="Contact EDC Supply to discuss your application, request product information or obtain a quotation." headerVariant="dark" headerHeight={184} footerGeometry={{ ...defaultFooterGeometry, height: 326 }}>
+  <ContactHero {...contactHero} />
+  <ContactForm client:load endpoint={url(contactEndpoint)} />
+</BaseLayout>
