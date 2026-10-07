@@ -1,0 +1,70 @@
+---
+import { productsPageLayout as L } from '@/data/product-layouts';
+import { getProduct, productHref } from '@/data/products';
+import { Txt } from './Txt';
+import { STAGE_TOP, placed, topFromBaseline } from './layout';
+
+const LINK_SIZE = 14.8;
+const LINK_LH = 17;
+const abs = 'xl:absolute stage-x xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-h-none xl:max-w-none';
+---
+
+<div class="relative xl:h-(--h) xl:[overflow-x:clip]" style={{ '--h': `${L.footerTop - STAGE_TOP}px` }}>
+  <!-- Hero -->
+  <section class="relative isolate flex min-h-[260px] items-center justify-center overflow-hidden bg-navy px-6 py-16 text-center md:min-h-[340px] xl:contents">
+    <img
+      src={L.hero.src}
+      alt=""
+      width={L.hero.w}
+      height={L.hero.h}
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-right xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-w-none xl:object-fill"
+      style={placed(L.hero)}
+    />
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/45 xl:hidden"></div>
+    <Txt spec={L.heroTitle} as="h1" centered className="relative text-[36px] font-bold leading-tight text-page md:text-[56px]" />
+  </section>
+
+  <!-- Catalogue -->
+  <section aria-label="Products" class="px-6 py-12 md:px-10 xl:contents">
+    <Txt spec={L.heading} as="h2" centered className="mb-10 text-[26px] font-bold leading-tight text-black md:text-[34px]" />
+    <ul class="m-0 grid list-none grid-cols-1 gap-x-6 gap-y-12 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:contents">
+      {
+        L.items.map((item) => {
+          const product = getProduct(item.slug);
+          const href = productHref(item.slug);
+          const anchorTop = topFromBaseline(item.link.y + 10.6, LINK_SIZE, LINK_LH);
+          return (
+            <li class="flex flex-col items-start xl:contents">
+              <a href={href} class="mx-auto flex h-[240px] items-center xl:contents" aria-label={product.nameLines.join(' ')} tabindex="-1">
+                <img
+                  src={item.image.src}
+                  alt={product.nameLines.join(' ')}
+                  width={item.image.w}
+                  height={item.image.h}
+                  class={`max-h-[220px] w-auto ${abs} xl:max-h-none xl:object-fill`}
+                  style={placed(item.image)}
+                />
+              </a>
+              <Txt spec={item.title} as="h3" className="mt-4 text-[22px] font-bold leading-[1.1] text-black" />
+              <a
+                href={href}
+                class="relative mt-3 inline-flex items-center gap-2 whitespace-nowrap text-navy no-underline [font-size:14.8px] [font-weight:500] [line-height:17px] xl:absolute stage-x xl:top-(--y) xl:mt-0 xl:block"
+                style={{ '--x': `${item.link.x}px`, '--y': `${anchorTop - STAGE_TOP}px` }}
+              >
+                Learn more
+                <img
+                  src="/assets/shared/arrow-right.png"
+                  alt=""
+                  width="17"
+                  height="17"
+                  class="h-[17px] w-[17px] max-w-none xl:absolute xl:left-(--ax) xl:top-(--ay)"
+                  style={{ '--ax': `${item.arrow.x - item.link.x}px`, '--ay': `${item.arrow.y - anchorTop}px` }}
+                />
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</div>

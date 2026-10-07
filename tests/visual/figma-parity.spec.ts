@@ -19,6 +19,7 @@ const MAX_MISMATCH_RATIO = 0.04;
 const allPages = [
   { name: 'home', route: '/', reference: 'home.png', max: 0.04 },
   { name: 'about', route: '/about', reference: 'about.png', max: 0.04 },
+  { name: 'contact', route: '/contact', reference: 'contact.png', max: 0.04 },
   { name: 'products', route: '/products', reference: 'products.png', max: 0.02 },
   ...[
     'surge-protection-devices',
@@ -36,7 +37,7 @@ const allPages = [
 const pages = allPages.filter((p) => fs.existsSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'references', p.reference)));
 
 /** Pages that also get responsive regression baselines (kept to a representative few). */
-const responsivePages = pages.filter((p) => ['home', 'about', 'products', 'product-1', 'product-8'].includes(p.name));
+const responsivePages = pages.filter((p) => ['home', 'about', 'contact', 'products', 'product-1', 'product-8'].includes(p.name));
 
 for (const { name, route, reference, max } of pages) {
   test(`${name} matches the Figma frame`, async ({ page }, testInfo) => {

@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProductDetail from '@/components/products/ProductDetail.astro';
+import { productPageLayouts } from '@/data/product-layouts';
+import { getProduct, products } from '@/data/products';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const product = getProduct(slug as string);
+const layout = productPageLayouts[product.slug];
+---
+
+<BaseLayout title={`${product.nameLines.join(' ')} | EDC Supply`} footerOffset={layout?.footerOffsetX ?? 0} footerGeometry={layout?.footer}>
+  <ProductDetail slug={product.slug} />
+</BaseLayout>

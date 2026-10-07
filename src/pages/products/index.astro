@@ -1,0 +1,9 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProductsGrid from '@/components/products/ProductsGrid.astro';
+import { productsPageLayout } from '@/data/product-layouts';
+---
+
+<BaseLayout title="Products & Solutions | EDC Supply" footerOffset={productsPageLayout.footerOffsetX} footerGeometry={productsPageLayout.footer}>
+  <ProductsGrid />
+</BaseLayout>

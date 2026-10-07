@@ -4,3 +4,8 @@ dist
 test-results
 playwright-report
 tests/visual/__diff__
+
+# Secrets (FTP credentials) – never commit
+.env
+.env.*
+!.env.example

@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:visual": "playwright test",
-    "test:visual:update": "playwright test --update-snapshots"
+    "test:visual:update": "playwright test --update-snapshots",
+    "deploy": "node scripts/deploy-ftp.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -30,6 +31,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^4.7.0",
+    "basic-ftp": "^6.2.2",
     "jsdom": "^29.1.1",
     "pixelmatch": "^8.0.0",
     "pngjs": "^7.0.0",

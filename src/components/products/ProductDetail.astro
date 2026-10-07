@@ -1,0 +1,93 @@
+---
+import { productPageLayouts } from '@/data/product-layouts';
+import { cardTemplates } from '@/data/carousel-templates';
+import { products } from '@/data/products';
+import { Txt } from './Txt';
+import { RelatedCarousel } from './RelatedCarousel';
+import { STAGE_TOP, placed } from './layout';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const L = productPageLayouts[slug];
+if (!L) throw new Error(`No layout for product: ${slug}`);
+const { hero } = L;
+
+// Only the templates the carousel can need (every product except this one).
+const templates = Object.fromEntries(products.filter((p) => p.slug !== slug).map((p) => [p.slug, cardTemplates[p.slug]]));
+
+/** Absolute box on desktop (`xl:`); small screens let the element flow. */
+const abs = 'xl:absolute stage-x xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-h-none xl:max-w-none';
+/** Full-bleed backgrounds: start at the screen edge and stretch to its right edge when wider than the frame. */
+const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-h-none xl:max-w-none';
+---
+
+<div class="relative xl:h-(--h) xl:[overflow-x:clip]" style={{ '--h': `${L.footerTop - STAGE_TOP}px` }}>
+  <!-- Hero -->
+  <section class="relative isolate flex flex-col items-center gap-6 overflow-hidden bg-navy px-6 py-16 text-center md:px-10 md:py-24 xl:contents">
+    {
+      hero.photo.crop ? (
+        <div class="absolute inset-0 -z-20 overflow-hidden xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)]" style={placed(hero.photo)}>
+          <img src={hero.photo.src} alt="" class="absolute left-0 max-w-none object-fill" style={{ top: `${hero.photo.crop.y}px`, width: `max(${hero.photo.crop.w}px, 100%)`, height: 'auto', aspectRatio: `${hero.photo.crop.w} / ${hero.photo.crop.h}` }} />
+        </div>
+      ) : (
+        <img
+          src={hero.photo.src}
+          alt=""
+          width={hero.photo.w}
+          height={hero.photo.h}
+          class="absolute inset-0 -z-20 h-full w-full object-cover xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-w-none xl:object-fill"
+          style={placed(hero.photo)}
+        />
+      )
+    }
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/65 xl:hidden"></div>
+    {hero.overlay && <img src={hero.overlay.src} alt="" aria-hidden="true" class={`hidden xl:block ${bleed} xl:object-fill`} style={placed(hero.overlay)} />}
+    {hero.cssGradient && <div aria-hidden="true" class={`hidden xl:block ${bleed}`} style={{ ...placed(hero.cssGradient), background: hero.cssGradient.background }}></div>}
+    {hero.lines && <img src="/assets/products/hero-lines.svg" alt="" aria-hidden="true" class={`hidden xl:block xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-w-none`} style={placed({ ...hero.lines, w: 248.33, h: 696.81 })} />}
+
+    <Txt spec={L.title} as="h1" centered className="relative text-[34px] font-bold leading-[1.1] text-page md:text-[48px]" />
+    <Txt spec={L.subtitle} centered className="relative max-w-[560px] text-[18px] font-medium leading-[1.4] text-page md:text-[20px]" />
+    <a
+      href="/contact"
+      class="relative mt-2 inline-flex h-[54px] w-[298px] items-center justify-center rounded-full bg-[#a9d3c5] text-[20px] font-semibold text-navy no-underline xl:absolute stage-x xl:top-(--y) xl:mt-0 xl:h-(--h) xl:w-(--w)"
+      style={placed(L.button)}
+    >
+      Request a quote
+    </a>
+  </section>
+
+  <!-- Features -->
+  <section aria-label="Key features" class="grid gap-12 px-6 py-12 md:grid-cols-3 md:px-10 xl:contents">
+    {
+      L.features.map((f) => (
+        <article class="flex flex-col items-center text-center xl:contents">
+          <img src={f.icon.src} alt="" width={f.icon.w} height={f.icon.h} class={`h-24 w-24 ${abs} xl:object-fill`} style={placed(f.icon)} />
+          <Txt spec={f.heading} as="h2" centered className="mt-5 text-[20px] font-semibold leading-tight text-black" />
+          <Txt spec={f.description} centered className="mt-3 max-w-[420px] text-[18px] font-normal leading-[1.35] text-black" />
+        </article>
+      ))
+    }
+  </section>
+
+  <!-- Product showcase -->
+  <section aria-label="Product range" class="flex flex-wrap items-center justify-center gap-4 px-6 py-8 xl:contents">
+    {L.showcase.map((img) => <img src={img.src} alt="" width={img.w} height={img.h} class={`h-auto max-h-[300px] w-auto max-w-[45%] md:max-h-[420px] ${abs} xl:object-fill`} style={placed(img)} />)}
+    {L.showcaseSvg && <img src={L.showcaseSvg.src} alt="" width={L.showcaseSvg.w} height={L.showcaseSvg.h} class={`h-auto max-h-[420px] w-auto max-w-full ${abs} xl:object-fill`} style={placed(L.showcaseSvg)} />}
+  </section>
+
+  <!-- Keep exploring -->
+  <section aria-label="Keep exploring our products" class="relative isolate pt-12 xl:contents">
+    <img
+      src="/assets/products/section-gradient.png"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 -z-10 h-full w-full object-fill xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-w-none"
+      style={placed(L.gradient)}
+    />
+    <Txt spec={L.explore} as="h2" className="mb-8 px-6 text-[26px] font-medium leading-tight text-black md:px-10" />
+    <RelatedCarousel client:visible slug={slug} carousel={L.carousel} templates={templates} />
+  </section>
+</div>
