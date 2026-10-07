@@ -1,7 +1,7 @@
 ---
 import { url, stripBase } from '@/lib/url';
 import '@/styles/global.css';
-import { ClientRouter } from 'astro:transitions';
+import { ClientRouter, fade } from 'astro:transitions';
 import { Header } from '@/components/layout/Header';
 import { Footer, type FooterGeometry } from '@/components/layout/Footer';
 
@@ -58,7 +58,10 @@ const currentPath = stripBase(Astro.url.pathname);
   </head>
   <body>
     <div class="site-stage">
-    <Header client:load currentPath={currentPath} variant={headerVariant} height={headerHeight} transition:animate="none" />
+    <!-- A real box (the island itself is display:contents) so the header cross-fades smoothly between light and dark. -->
+    <div transition:name="site-header" transition:animate={fade({ duration: '0.5s' })}>
+      <Header client:load currentPath={currentPath} variant={headerVariant} height={headerHeight} />
+    </div>
     <main transition:animate="fade" class="xl:pt-(--gap)" style={{ '--gap': `${topGap}px` }}>
       <slot />
     </main>

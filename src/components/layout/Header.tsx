@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { assets } from '@/data/assets';
-import { contactCta, navItems, whatsapp } from '@/data/site';
+import { contactCta, navItems } from '@/data/site';
 import { Button } from '@/components/ui/Button';
 import { url } from '@/lib/url';
 
@@ -38,7 +38,7 @@ export function Header({ currentPath, height = HEADER_HEIGHT, variant = 'light' 
 
   return (
     <header className={`relative xl:h-(--hh) ${dark ? 'bg-navy' : 'bg-page'}`} style={{ '--hh': `${height}px` } as React.CSSProperties}>
-      <div className={`mx-auto flex h-[84px] max-w-[1623px] items-center justify-between px-6 md:px-10 xl:h-[128px] xl:items-center xl:pl-[80px] xl:pr-[94px]`}>
+      <div className={`mx-auto flex h-[84px] max-w-[1623px] items-center justify-between px-6 md:px-10 xl:h-[128px] xl:items-center xl:pl-[80px] xl:pr-[80px]`}>
         <a href={url('/')} aria-label="EDC Supply – Power Solutions" className="block">
           <img src={url(assets.logo)} alt="EDC Supply Power Solutions" width={151} height={43} className={`h-[38px] w-auto xl:h-[43px] ${dark ? 'brightness-0 invert' : ''}`} />
         </a>
@@ -90,14 +90,6 @@ export function Header({ currentPath, height = HEADER_HEIGHT, variant = 'light' 
               {contactCta.label}
             </Button>
           </div>
-          <a
-            href={whatsapp.href}
-            aria-label={whatsapp.label}
-            {...row(navItems.length + 1)}
-            className={`mt-3 block w-fit xl:ml-[39px] xl:mt-0 ${row(navItems.length + 1).className}`}
-          >
-            <img src={url(assets.whatsapp)} alt="" width={40} height={37} className={`cta h-[37px] w-[40px] object-contain ${dark ? 'xl:brightness-0 xl:invert' : ''}`} />
-          </a>
         </nav>
       </div>
     </header>

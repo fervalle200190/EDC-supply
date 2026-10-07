@@ -16,7 +16,6 @@ export const navItems: readonly NavItem[] = [
 
 export const contactCta: NavItem = { label: 'Contact Us', href: '/contact' };
 
-export const whatsapp = { href: 'https://wa.me/17542300816', label: 'WhatsApp' } as const;
 
 export const footerColumns: readonly FooterColumn[] = [
   { title: 'EDC SUPPLY', lines: ['Your Strategic Partner', 'in Reliable Power'] },

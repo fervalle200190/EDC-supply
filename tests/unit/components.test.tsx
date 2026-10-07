@@ -12,6 +12,12 @@ import { heroSlides, portfolioItems, solutionAreas } from '@/data/home';
 import { trustedBy } from '@/data/about';
 
 describe('Header', () => {
+  it('has no WhatsApp button', () => {
+    const { container } = render(<Header currentPath="/" />);
+    expect(container.querySelector('a[href*="wa.me"]')).toBeNull();
+    expect(screen.queryByLabelText(/whatsapp/i)).toBeNull();
+  });
+
   it('renders the primary navigation and marks the current page', () => {
     render(<Header currentPath="/about" />);
     const nav = screen.getByRole('navigation', { name: 'Primary' });
