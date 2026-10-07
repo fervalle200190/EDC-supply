@@ -59,7 +59,7 @@ const currentPath = stripBase(Astro.url.pathname);
   <body>
     <div class="site-stage">
     <!-- A real box (the island itself is display:contents) so the header cross-fades smoothly between light and dark. -->
-    <div transition:name="site-header" transition:animate={fade({ duration: '0.5s' })}>
+    <div class="relative z-30" transition:name="site-header" transition:animate={fade({ duration: '0.5s' })}>
       <Header client:load currentPath={currentPath} variant={headerVariant} height={headerHeight} />
     </div>
     <main transition:animate="fade" class="xl:pt-(--gap)" style={{ '--gap': `${topGap}px` }}>

@@ -77,3 +77,18 @@ for (const { name, route } of responsivePages) {
     });
   }
 }
+
+/** The mobile menu curtain must paint above the page content (a stacking-context regression once hid it behind the hero). */
+for (const route of ['/', '/contact', '/products']) {
+  test(`mobile menu opens above the page on ${route}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.goto(route, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: 'Open menu' }).click();
+    const link = page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'About Us' });
+    await expect(link).toBeVisible();
+    const box = (await link.boundingBox())!;
+    const onTop = await page.evaluate(([x, y]) => document.elementFromPoint(x!, y!)?.closest('nav') !== null, [box.x + box.width / 2, box.y + box.height / 2]);
+    expect(onTop, 'the menu link is the topmost element at its position').toBe(true);
+  });
+}
