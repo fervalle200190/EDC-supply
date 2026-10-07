@@ -142,11 +142,14 @@ export interface PortfolioItem {
   title: string;
   image: string;
   href: string;
+  /** Size (design px) of the product shot inside the card. */
+  size: { w: number; h: number };
 }
 
 export const portfolioTitle = 'Complete energy & power quality portfolio';
-export const portfolioItems: readonly PortfolioItem[] = products.slice(0, 4).map((p) => ({
+export const portfolioItems: readonly PortfolioItem[] = products.map((p) => ({
   title: (p.cardNameLines ?? p.nameLines).join('\n'),
   image: p.thumb,
   href: productHref(p.slug),
+  size: p.carouselImage,
 }));

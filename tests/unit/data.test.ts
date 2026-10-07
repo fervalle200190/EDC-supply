@@ -24,10 +24,10 @@ describe('home data', () => {
     expect(new Set(partners.map((p) => p.name)).size).toBe(7);
   });
 
-  it('has four "why partner" items, four solution areas and four portfolio cards', () => {
+  it('has four "why partner" items, four solution areas and a card per product', () => {
     expect(whyItems).toHaveLength(4);
     expect(solutionAreas).toHaveLength(4);
-    expect(portfolioItems).toHaveLength(4);
+    expect(portfolioItems).toHaveLength(8);
   });
 
   it('sends the flagship button to the star product (SPDs)', () => {

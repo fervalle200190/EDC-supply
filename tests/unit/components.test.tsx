@@ -132,13 +132,26 @@ describe('PortfolioCarousel', () => {
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
   });
 
-  it('scrolls the track when an arrow is pressed', async () => {
+  it('lists every product, not just the first four', () => {
+    render(<PortfolioCarousel title="t" items={portfolioItems} />);
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(8);
+  });
+
+  it('slides one card per arrow press and wraps around at both ends', async () => {
     render(<PortfolioCarousel title="t" items={portfolioItems} />);
     const track = screen.getAllByRole('list')[0]!;
-    let scrolled: ScrollToOptions | undefined;
-    track.scrollBy = ((opts: ScrollToOptions) => { scrolled = opts; }) as typeof track.scrollBy;
+    Object.defineProperty(track, 'clientWidth', { value: 1000, configurable: true });
+    Object.defineProperty(track, 'scrollWidth', { value: 3000, configurable: true });
+    const calls: string[] = [];
+    track.scrollBy = ((o: ScrollToOptions) => calls.push(`by:${o.left! > 0 ? '+' : '-'}`)) as typeof track.scrollBy;
+    track.scrollTo = ((o: ScrollToOptions) => calls.push(`to:${o.left}`)) as typeof track.scrollTo;
+
+    track.scrollLeft = 0;
     await userEvent.click(screen.getByRole('button', { name: 'Next' }));
-    expect(scrolled?.left).toBeGreaterThanOrEqual(0);
+    await userEvent.click(screen.getByRole('button', { name: 'Previous' })); // at the start: jumps to the end
+    track.scrollLeft = 2000;
+    await userEvent.click(screen.getByRole('button', { name: 'Next' })); // at the end: back to the start
+    expect(calls).toEqual(['by:+', 'to:3000', 'to:0']);
   });
 });
 

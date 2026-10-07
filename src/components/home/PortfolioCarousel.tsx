@@ -9,14 +9,6 @@ interface PortfolioCarouselProps {
   items: readonly PortfolioItem[];
 }
 
-/** Natural size (design px) of each product shot, in the same order as the items. */
-const imageSizes = [
-  [107, 166],
-  [80, 212],
-  [99, 186],
-  [138, 136],
-] as const;
-
 const Chevron = ({ dir }: { dir: 'left' | 'right' }) => (
   <svg width="10" height="18" viewBox="0 0 10 18" fill="none" aria-hidden="true">
     <path d={dir === 'left' ? 'M9 1 1 9l8 8' : 'm1 1 8 8-8 8'} stroke="#0d3147" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -38,7 +30,12 @@ export function PortfolioCarousel({ title, items }: PortfolioCarouselProps) {
   const scrollByCard = (direction: -1 | 1) => {
     const track = trackRef.current;
     if (!track) return;
-    track.scrollBy({ left: direction * (track.firstElementChild?.clientWidth ?? 300), behavior: 'smooth' });
+    // Loops: past the last card it glides back to the first one and vice versa.
+    const pitch = (track.firstElementChild?.clientWidth ?? 300) + 40;
+    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    if (direction === 1 && atEnd) track.scrollTo({ left: 0, behavior: 'smooth' });
+    else if (direction === -1 && track.scrollLeft <= 4) track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+    else track.scrollBy({ left: direction * pitch, behavior: 'smooth' });
   };
 
   return (
@@ -54,18 +51,19 @@ export function PortfolioCarousel({ title, items }: PortfolioCarouselProps) {
           className="text-[28px] font-semibold leading-tight text-black md:text-[40px]"
         />
 
-        {/* Four equal columns on the 131px–1494px content grid. */}
+        {/* Four cards in view on the 131px–1494px content grid; the arrows slide through the whole catalogue. The padding
+            leaves room for the hover zoom and shadow, which a scroll container would otherwise clip. */}
         <ul
           ref={trackRef}
           style={{ '--cy': `${portfolioLayout.cardsTop - sectionTops.portfolio}px` } as React.CSSProperties}
-          className="m-0 mt-8 flex snap-x list-none gap-6 overflow-x-auto p-0 pb-4 [scrollbar-width:none] xl:absolute xl:left-[131px] xl:top-(--cy) xl:mt-0 xl:grid xl:w-[1363px] xl:grid-cols-4 xl:gap-10 xl:overflow-visible xl:p-0"
+          className="m-0 mt-8 flex snap-x list-none gap-6 overflow-x-auto p-0 pb-4 [scrollbar-width:none] xl:absolute xl:left-[115px] xl:top-[calc(var(--cy)-30px)] xl:mt-0 xl:w-[1395px] xl:scroll-pl-4 xl:gap-10 xl:px-4 xl:py-[30px]"
         >
-          {items.map((item, i) => {
-            const [w, h] = imageSizes[i] ?? imageSizes[0];
+          {items.map((item) => {
+            const { w, h } = item.size;
             return (
               <li
                 key={item.title}
-                className="group relative h-[422px] w-[280px] shrink-0 snap-start rounded-[20px] bg-card transition-[transform,box-shadow] duration-300 ease-out hover:z-10 hover:scale-[1.05] hover:shadow-[0_18px_40px_rgba(13,49,71,0.28)] motion-reduce:transition-none motion-reduce:hover:scale-100 xl:w-auto"
+                className="group relative h-[422px] w-[280px] shrink-0 snap-start rounded-[20px] bg-card transition-[transform,box-shadow] duration-300 ease-out hover:z-10 hover:scale-[1.05] hover:shadow-[0_18px_40px_rgba(13,49,71,0.28)] motion-reduce:transition-none motion-reduce:hover:scale-100 xl:w-[310.75px]"
               >
                 <a href={url(item.href)} tabIndex={-1} aria-hidden="true" className="absolute inset-0 z-10 rounded-[20px]" />
                 <h3 className="absolute left-[28px] top-[34px] m-0 whitespace-pre-line text-[20px] font-bold leading-[20px] text-black">
