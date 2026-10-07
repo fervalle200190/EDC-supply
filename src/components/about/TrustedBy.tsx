@@ -14,7 +14,7 @@ export function TrustedBy({ title, background, clients }: TrustedByProps) {
         src={url(background)}
         alt=""
         aria-hidden="true"
-        className="absolute bottom-0 left-0 -z-10 h-[60%] w-full xl:left-0 xl:top-[423px] xl:h-[1000px] xl:w-full xl:max-w-none"
+        className="absolute bottom-0 left-0 -z-10 h-[40%] w-full xl:left-0 xl:top-[583px] xl:h-[840px] xl:w-full xl:max-w-none"
       />
       <div className="mx-auto max-w-[1623px] xl:relative xl:h-full">
         <h2 className="m-0 text-center text-[26px] font-medium leading-[1.2] text-black md:text-[34px] xl:absolute xl:left-[399px] xl:top-[197px] xl:w-[825px] xl:text-[39.57px] xl:leading-[42px]">

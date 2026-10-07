@@ -19,7 +19,7 @@ export function Button({ variant = 'navy', className, children, ...rest }: Butto
   return (
     <a
       className={cn(
-        'inline-flex items-center justify-center rounded-full font-medium no-underline',
+        'cta inline-flex items-center justify-center rounded-full font-medium no-underline',
         variants[variant],
         className,
       )}

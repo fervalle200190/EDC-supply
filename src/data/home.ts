@@ -11,8 +11,9 @@ export interface HeroSlide {
   overlay?: boolean;
 }
 
-/** Every hero button scrolls to "Our four solution areas". */
+/** Where each hero button leads (Figma comments): slide 1 scrolls to "Our four solution areas", the rest open a page. */
 const solutions = '#solutions';
+const [surgeProtection, , , ups, , , , machineHealth] = products.map((p) => productHref(p.slug));
 
 export const heroSlides: readonly HeroSlide[] = [
   {
@@ -27,20 +28,20 @@ export const heroSlides: readonly HeroSlide[] = [
   },
   {
     title: ['Cleaner Power.', 'Better Performance.'],
-    description: ['Reduce harmonics, improve power factor, and protect sensitive', 'equipment from electrical disturbances.'],
-    cta: { label: 'Power Quality Solutions', href: solutions },
+    description: ['Reduce harmonics, improve power factor,', 'and protect sensitive equipment from', 'electrical disturbances.'],
+    cta: { label: 'Power Quality Solutions', href: '/products' },
     image: '/assets/home/hero-2.jpg',
   },
   {
     title: ['Protect What Keeps', 'You Running.'],
     description: ['Advanced surge and transient protection for sensitive', 'equipment and mission-critical systems.'],
-    cta: { label: 'Electrical Protection', href: solutions },
+    cta: { label: 'Electrical Protection', href: surgeProtection },
     image: '/assets/home/hero-3.jpg',
   },
   {
     title: ['Power That', 'Never Stops.'],
     description: ['Critical power and backup solutions designed to maintain', 'operational continuity when it matters most.'],
-    cta: { label: 'Critical Power Solutions', href: solutions },
+    cta: { label: 'Critical Power Solutions', href: ups },
     image: '/assets/home/hero-4.jpg',
   },
   {
@@ -50,13 +51,13 @@ export const heroSlides: readonly HeroSlide[] = [
       'that help identify equipment issues before they become',
       'costly failures.',
     ],
-    cta: { label: 'Monitoring Solutions', href: solutions },
+    cta: { label: 'Monitoring Solutions', href: machineHealth },
     image: '/assets/home/hero-5.jpg',
   },
   {
     title: ['Make Your Electrical', 'System Work Better.'],
     description: ['Engineered solutions to improve electrical performance,', 'efficiency, reliability, and equipment life.'],
-    cta: { label: 'Optimize Your Facility', href: solutions },
+    cta: { label: 'Optimize Your Facility', href: '/contact' },
     image: '/assets/home/hero-6.jpg',
   },
 ];
@@ -77,6 +78,7 @@ export const partners: readonly Partner[] = [
   { name: 'Mirus International', logo: '/assets/home/partner-mirus.png', width: 114, height: 68 },
   { name: 'SineTamer', logo: '/assets/home/partner-sinetamer.png', width: 101, height: 40 },
   { name: 'Sensemore', logo: '/assets/home/partner-sensemore.png', width: 102, height: 102 },
+  { name: 'PerfectSine', logo: '/assets/home/partner-perfectsine.png', width: 140, height: 26 },
 ];
 
 export interface WhyItem {

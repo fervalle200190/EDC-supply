@@ -12,6 +12,7 @@ export function MissionVision({ background, cards }: MissionVisionProps) {
         {cards.map((card) => (
           <article
             key={card.title}
+            data-rv-inner
             className="glass-shine relative rounded-[40px] border border-[#2b6a80] bg-white/40 p-8 backdrop-blur-[10px] xl:absolute xl:left-(--x) xl:top-[241px] xl:h-[243px] xl:w-[683px] xl:p-0"
             style={{ '--x': `${card.x}px` } as React.CSSProperties}
           >

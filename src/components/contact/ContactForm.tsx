@@ -122,7 +122,7 @@ export function ContactForm({ endpoint }: ContactFormProps) {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="inline-flex h-[44px] w-[187px] cursor-pointer items-center justify-center rounded-[10px] border-0 bg-navy p-0 text-[20px] font-medium leading-none text-white transition-[transform,box-shadow,opacity] duration-300 hover:-translate-y-px hover:shadow-[0_10px_22px_rgba(13,49,71,0.3)] disabled:cursor-wait disabled:opacity-70 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            className="cta inline-flex h-[44px] w-[187px] cursor-pointer items-center justify-center rounded-[10px] border-0 bg-navy p-0 text-[20px] font-medium leading-none text-white hover:shadow-[0_10px_22px_rgba(13,49,71,0.3)] disabled:cursor-wait disabled:opacity-70"
           >
             Submit request
           </button>

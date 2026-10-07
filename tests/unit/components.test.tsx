@@ -60,12 +60,13 @@ describe('Hero autoplay', () => {
 
   const selected = () => screen.getAllByRole('tab').findIndex((t) => t.getAttribute('aria-selected') === 'true');
 
-  it('has six slides whose buttons all scroll to "Our four solution areas"', () => {
+  it('has six slides, each button pointing at its own destination', () => {
     const { container } = render(<Hero slides={heroSlides} />);
     expect(heroSlides).toHaveLength(6);
     const links = [...container.querySelectorAll('a')];
     expect(links).toHaveLength(6);
-    for (const a of links) expect(a).toHaveAttribute('href', '#solutions');
+    expect(links.map((a) => a.getAttribute('href'))).toEqual(heroSlides.map((s) => s.cta.href));
+    expect(links[0]).toHaveAttribute('href', '#solutions');
   });
 
   it('gives every slide its own headline and button label', () => {

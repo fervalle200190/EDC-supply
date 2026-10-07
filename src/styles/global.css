@@ -82,6 +82,27 @@
   }
 }
 
+/* Call to action: every button grows slightly on hover / keyboard focus (same feel as the header's Contact Us). */
+.cta {
+  transition: scale 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+.cta:hover,
+.cta:focus-visible {
+  scale: 1.07;
+}
+.cta:active {
+  scale: 1.02;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta {
+    transition: none;
+  }
+  .cta:hover,
+  .cta:focus-visible {
+    scale: 1;
+  }
+}
+
 /* Glass cards: a soft light streak sweeps across on hover (About → Mission / Vision). */
 .glass-shine {
   overflow: hidden;

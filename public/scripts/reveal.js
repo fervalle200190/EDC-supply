@@ -21,6 +21,8 @@
     var out = [];
     (function walk(node) {
       for (var el = node.firstElementChild; el; el = el.nextElementSibling) {
+        // Frosted-glass boxes (backdrop-filter) glitch when an ancestor fades: keep the box still, reveal only its content.
+        if (el.hasAttribute('data-rv-inner')) { walk(el); continue; }
         if (el.matches(SKIP) || el.hasAttribute('data-rv') || el.tagName === 'ASTRO-ISLAND' && el.hasAttribute('ssr')) continue;
         if (el.matches(TARGET)) {
           var display = getComputedStyle(el).display;

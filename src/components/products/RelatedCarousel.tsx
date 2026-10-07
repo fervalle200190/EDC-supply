@@ -88,7 +88,7 @@ export function RelatedCarousel({ slug, carousel, templates }: RelatedCarouselPr
           return (
             <li
               key={s}
-              className="relative h-[422px] w-[311px] shrink-0 snap-start rounded-[20px] bg-card xl:absolute xl:left-(--x) xl:top-(--y) transition-[transform,box-shadow] duration-300 ease-out hover:z-10 hover:scale-[1.05] hover:shadow-[0_18px_40px_rgba(13,49,71,0.28)] motion-reduce:transition-none motion-reduce:hover:scale-100 xl:transition-[left,transform,box-shadow]"
+              className="relative h-[422px] w-[311px] shrink-0 snap-start rounded-[20px] bg-card xl:absolute xl:left-(--x) xl:top-(--y) transition-[transform,scale,box-shadow] duration-300 ease-out hover:z-10 hover:scale-[1.05] hover:shadow-[0_18px_40px_rgba(13,49,71,0.28)] motion-reduce:transition-none motion-reduce:hover:scale-100 xl:transition-[left,transform,scale,box-shadow]"
               style={{ ...placed({ x: slotX(posOf(i)) - winLeft, y: y - winTop }, 0), ...(instant[i] ? { transition: 'none' } : {}) }}
             >
               <a href={url(productHref(s))} tabIndex={-1} aria-hidden="true" className="absolute inset-0 z-10 rounded-[20px]" />
@@ -128,7 +128,7 @@ export function RelatedCarousel({ slug, carousel, templates }: RelatedCarouselPr
             type="button"
             aria-label={i === 0 ? 'Previous products' : 'Next products'}
             onClick={() => go(i === 0 ? -1 : 1)}
-            className={`absolute top-[40%] hidden size-[34px] cursor-pointer place-items-center rounded-full border-0 bg-[#e4e6ef] p-0 sm:grid xl:right-auto xl:top-(--y) stage-x ${i === 0 ? 'left-2' : 'right-2'}`}
+            className={`cta absolute top-[40%] hidden size-[34px] cursor-pointer place-items-center rounded-full border-0 bg-[#e4e6ef] p-0 sm:grid xl:right-auto xl:top-(--y) stage-x ${i === 0 ? 'left-2' : 'right-2'}`}
             style={placed({ x: a.x, y: a.y })}
           >
             <Chevron dir={i === 0 ? 'left' : 'right'} />

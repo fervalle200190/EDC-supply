@@ -20,8 +20,24 @@ describe('home data', () => {
     expect(heroSlides).toHaveLength(6);
   });
 
-  it('lists the seven technology partners with unique names', () => {
-    expect(new Set(partners.map((p) => p.name)).size).toBe(7);
+  it('lists the eight technology partners with unique names (PerfectSine joined the loop)', () => {
+    expect(new Set(partners.map((p) => p.name)).size).toBe(8);
+    expect(partners.map((p) => p.name)).toContain('PerfectSine');
+  });
+
+  it('sends each hero button where the Figma comments say', () => {
+    expect(heroSlides.map((s) => s.cta.href)).toEqual([
+      '#solutions',
+      '/products',
+      '/products/surge-protection-devices',
+      '/products/uninterruptible-power-supplies',
+      '/products/machine-health-monitoring',
+      '/contact',
+    ]);
+  });
+
+  it('keeps every hero description to three lines at most', () => {
+    for (const s of heroSlides) expect(s.description.length).toBeLessThanOrEqual(3);
   });
 
   it('has four "why partner" items, four solution areas and a card per product', () => {

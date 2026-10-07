@@ -38,9 +38,9 @@ export function Header({ currentPath, height = HEADER_HEIGHT, variant = 'light' 
 
   return (
     <header className={`relative xl:h-(--hh) ${dark ? 'bg-navy' : 'bg-page'}`} style={{ '--hh': `${height}px` } as React.CSSProperties}>
-      <div className={`mx-auto flex h-[84px] max-w-[1623px] items-center justify-between px-6 md:px-10 xl:h-full xl:items-center ${dark ? 'xl:pl-[72px] xl:pr-[136px]' : 'xl:pl-[80px] xl:pr-[94px]'}`}>
+      <div className={`mx-auto flex h-[84px] max-w-[1623px] items-center justify-between px-6 md:px-10 xl:h-[128px] xl:items-center xl:pl-[80px] xl:pr-[94px]`}>
         <a href={url('/')} aria-label="EDC Supply – Power Solutions" className="block">
-          <img src={url(assets.logo)} alt="EDC Supply Power Solutions" width={151} height={43} className={`h-[38px] w-auto ${dark ? 'brightness-0 invert xl:h-[40px]' : 'xl:h-[43px]'}`} />
+          <img src={url(assets.logo)} alt="EDC Supply Power Solutions" width={151} height={43} className={`h-[38px] w-auto xl:h-[43px] ${dark ? 'brightness-0 invert' : ''}`} />
         </a>
 
         <button
@@ -66,11 +66,10 @@ export function Header({ currentPath, height = HEADER_HEIGHT, variant = 'light' 
             // Mobile/tablet: a curtain that drops from the header (clip-path + fade), always mounted so it can animate.
             'absolute inset-x-0 top-full z-20 flex flex-col gap-1 bg-page px-6 pb-6 pt-2 shadow-md transition-[opacity,clip-path,visibility,translate] duration-500 ease-[cubic-bezier(0.22,0.8,0.28,1)] motion-reduce:transition-none md:px-10',
             open ? 'visible translate-y-0 opacity-100 [clip-path:inset(0_0_-48px_0)]' : 'invisible -translate-y-2 opacity-0 [clip-path:inset(0_0_100%_0)]',
-            dark ? 'xl:translate-y-[2px]' : '',
             'xl:visible xl:static xl:z-auto xl:flex xl:translate-y-0 xl:flex-row xl:items-center xl:gap-0 xl:bg-transparent xl:p-0 xl:opacity-100 xl:shadow-none xl:transition-none xl:[clip-path:none]',
           ].join(' ')}
         >
-          <ul className={`m-0 flex list-none flex-col gap-1 p-0 xl:flex-row ${dark ? 'xl:gap-[62px]' : 'xl:gap-[54px]'}`}>
+          <ul className={`m-0 flex list-none flex-col gap-1 p-0 xl:flex-row xl:gap-[54px]`}>
             {navItems.map((item, i) => (
               <li key={item.href} {...row(i)}>
                 <a
@@ -87,20 +86,18 @@ export function Header({ currentPath, height = HEADER_HEIGHT, variant = 'light' 
             ))}
           </ul>
           <div {...row(navItems.length)} className={`mt-2 xl:ml-[45px] xl:mt-0 ${row(navItems.length).className}`}>
-            <Button href={url(contactCta.href)} className={`w-[150px] text-[20.2px] leading-none ${dark ? 'h-[43px] xl:bg-page xl:text-navy' : 'h-[41px]'}`}>
+            <Button href={url(contactCta.href)} className={`w-[150px] text-[20.2px] leading-none h-[41px] ${dark ? 'xl:bg-page xl:text-navy' : ''}`}>
               {contactCta.label}
             </Button>
           </div>
-          {dark ? null : (
           <a
             href={whatsapp.href}
             aria-label={whatsapp.label}
             {...row(navItems.length + 1)}
             className={`mt-3 block w-fit xl:ml-[39px] xl:mt-0 ${row(navItems.length + 1).className}`}
           >
-            <img src={url(assets.whatsapp)} alt="" width={40} height={37} className="h-[37px] w-[40px] object-contain" />
+            <img src={url(assets.whatsapp)} alt="" width={40} height={37} className={`cta h-[37px] w-[40px] object-contain ${dark ? 'xl:brightness-0 xl:invert' : ''}`} />
           </a>
-          )}
         </nav>
       </div>
     </header>

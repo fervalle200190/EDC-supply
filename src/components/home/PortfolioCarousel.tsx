@@ -93,7 +93,7 @@ export function PortfolioCarousel({ title, items }: PortfolioCarouselProps) {
           aria-label="Previous"
           onClick={() => scrollByCard(-1)}
           style={arrowStyle(portfolioLayout.arrows.left)}
-          className="absolute left-2 top-[60%] hidden size-[34px] cursor-pointer place-items-center rounded-full border-0 bg-white sm:grid xl:left-(--ax) xl:top-(--ay)"
+          className="cta absolute left-2 top-[60%] hidden size-[34px] cursor-pointer place-items-center rounded-full border-0 bg-white sm:grid xl:left-(--ax) xl:top-(--ay)"
         >
           <Chevron dir="left" />
         </button>
@@ -102,7 +102,7 @@ export function PortfolioCarousel({ title, items }: PortfolioCarouselProps) {
           aria-label="Next"
           onClick={() => scrollByCard(1)}
           style={arrowStyle(portfolioLayout.arrows.right)}
-          className="absolute right-2 top-[60%] hidden size-[34px] cursor-pointer place-items-center rounded-full border-0 bg-white sm:grid xl:left-(--ax) xl:right-auto xl:top-(--ay)"
+          className="cta absolute right-2 top-[60%] hidden size-[34px] cursor-pointer place-items-center rounded-full border-0 bg-white sm:grid xl:left-(--ax) xl:right-auto xl:top-(--ay)"
         >
           <Chevron dir="right" />
         </button>
@@ -122,7 +122,7 @@ export function PortfolioCarousel({ title, items }: PortfolioCarouselProps) {
           />
           <a
             href={url(closingCta.link.href)}
-            className="mt-8 inline-flex items-center gap-2 text-[22px] font-bold text-page no-underline xl:absolute xl:left-(--x) xl:top-(--y) xl:mt-0 xl:gap-0 xl:whitespace-nowrap xl:[font-size:var(--fs)] xl:[font-weight:var(--fw)] xl:[line-height:var(--lh)]"
+            className="cta origin-left mt-8 inline-flex items-center gap-2 text-[22px] font-bold text-page no-underline xl:absolute xl:left-(--x) xl:top-(--y) xl:mt-0 xl:gap-0 xl:whitespace-nowrap xl:[font-size:var(--fs)] xl:[font-weight:var(--fw)] xl:[line-height:var(--lh)]"
             style={
               {
                 '--x': `${closingCta.link.left}px`,
