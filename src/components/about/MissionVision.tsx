@@ -6,8 +6,15 @@ type MissionVisionProps = typeof missionVision;
 export function MissionVision({ background, cards }: MissionVisionProps) {
   return (
     <section className="relative isolate bg-page px-6 py-16 md:px-10 xl:h-[879px] xl:p-0">
-      {/* The photo has a white background: multiply blends it into the page colour, and the opacity keeps the text readable. */}
-      <img src={url(background)} alt="" className="absolute left-0 top-0 -z-10 h-full w-full object-cover mix-blend-multiply opacity-60 [mask-image:linear-gradient(to_bottom,transparent,#000_14%,#000_82%,transparent)] xl:h-[766px] xl:w-full" />
+      {/* The photo has a white background: blending it with the page colour (background-blend-mode, not mix-blend-mode, which
+          glitches under backdrop-filter) merges it into the page, and the opacity keeps the text readable. It is a div so the
+          scroll reveal never fades it while the frosted cards sample it. */}
+      <div
+        aria-hidden="true"
+        data-no-reveal
+        className="absolute left-0 top-0 -z-10 h-full w-full bg-page bg-cover bg-center [background-blend-mode:multiply] opacity-60 [mask-image:linear-gradient(to_bottom,transparent,#000_14%,#000_82%,transparent)] xl:h-[766px] xl:w-full"
+        style={{ backgroundImage: `url(${url(background)})` }}
+      />
       <div className="mx-auto grid max-w-[1623px] gap-8 md:grid-cols-2 xl:relative xl:block xl:h-full">
         {cards.map((card) => (
           <article
