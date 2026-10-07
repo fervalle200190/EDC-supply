@@ -1,4 +1,5 @@
 ---
+import { url } from '@/lib/url';
 import { productPageLayouts } from '@/data/product-layouts';
 import { cardTemplates } from '@/data/carousel-templates';
 import { products } from '@/data/products';
@@ -30,11 +31,11 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
     {
       hero.photo.crop ? (
         <div class="absolute inset-0 -z-20 overflow-hidden xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)]" style={placed(hero.photo)}>
-          <img src={hero.photo.src} alt="" class="absolute left-0 max-w-none object-fill" style={{ top: `${hero.photo.crop.y}px`, width: `max(${hero.photo.crop.w}px, 100%)`, height: 'auto', aspectRatio: `${hero.photo.crop.w} / ${hero.photo.crop.h}` }} />
+          <img src={url(hero.photo.src)} alt="" class="absolute left-0 max-w-none object-fill" style={{ top: `${hero.photo.crop.y}px`, width: `max(${hero.photo.crop.w}px, 100%)`, height: 'auto', aspectRatio: `${hero.photo.crop.w} / ${hero.photo.crop.h}` }} />
         </div>
       ) : (
         <img
-          src={hero.photo.src}
+          src={url(hero.photo.src)}
           alt=""
           width={hero.photo.w}
           height={hero.photo.h}
@@ -44,14 +45,14 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
       )
     }
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/65 xl:hidden"></div>
-    {hero.overlay && <img src={hero.overlay.src} alt="" aria-hidden="true" class={`hidden xl:block ${bleed} xl:object-fill`} style={placed(hero.overlay)} />}
+    {hero.overlay && <img src={url(hero.overlay.src)} alt="" aria-hidden="true" class={`hidden xl:block ${bleed} xl:object-fill`} style={placed(hero.overlay)} />}
     {hero.cssGradient && <div aria-hidden="true" class={`hidden xl:block ${bleed}`} style={{ ...placed(hero.cssGradient), background: hero.cssGradient.background }}></div>}
-    {hero.lines && <img src="/assets/products/hero-lines.svg" alt="" aria-hidden="true" class={`hidden xl:block xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-w-none`} style={placed({ ...hero.lines, w: 248.33, h: 696.81 })} />}
+    {hero.lines && <img src={url('/assets/products/hero-lines.svg')} alt="" aria-hidden="true" class={`hidden xl:block xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-w-none`} style={placed({ ...hero.lines, w: 248.33, h: 696.81 })} />}
 
     <Txt spec={L.title} as="h1" centered className="relative text-[34px] font-bold leading-[1.1] text-page md:text-[48px]" />
     <Txt spec={L.subtitle} centered className="relative max-w-[560px] text-[18px] font-medium leading-[1.4] text-page md:text-[20px]" />
     <a
-      href="/contact"
+      href={url('/contact')}
       class="relative mt-2 inline-flex h-[54px] w-[298px] items-center justify-center rounded-full bg-[#a9d3c5] text-[20px] font-semibold text-navy no-underline xl:absolute stage-x xl:top-(--y) xl:mt-0 xl:h-(--h) xl:w-(--w)"
       style={placed(L.button)}
     >
@@ -64,7 +65,7 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
     {
       L.features.map((f) => (
         <article class="flex flex-col items-center text-center xl:contents">
-          <img src={f.icon.src} alt="" width={f.icon.w} height={f.icon.h} class={`h-24 w-24 ${abs} xl:object-fill`} style={placed(f.icon)} />
+          <img src={url(f.icon.src)} alt="" width={f.icon.w} height={f.icon.h} class={`h-24 w-24 ${abs} xl:object-fill`} style={placed(f.icon)} />
           <Txt spec={f.heading} as="h2" centered className="mt-5 text-[20px] font-semibold leading-tight text-black" />
           <Txt spec={f.description} centered className="mt-3 max-w-[420px] text-[18px] font-normal leading-[1.35] text-black" />
         </article>
@@ -74,14 +75,14 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
 
   <!-- Product showcase -->
   <section aria-label="Product range" class="flex flex-wrap items-center justify-center gap-4 px-6 py-8 xl:contents">
-    {L.showcase.map((img) => <img src={img.src} alt="" width={img.w} height={img.h} class={`h-auto max-h-[300px] w-auto max-w-[45%] md:max-h-[420px] ${abs} xl:object-fill`} style={placed(img)} />)}
-    {L.showcaseSvg && <img src={L.showcaseSvg.src} alt="" width={L.showcaseSvg.w} height={L.showcaseSvg.h} class={`h-auto max-h-[420px] w-auto max-w-full ${abs} xl:object-fill`} style={placed(L.showcaseSvg)} />}
+    {L.showcase.map((img) => <img src={url(img.src)} alt="" width={img.w} height={img.h} class={`h-auto max-h-[300px] w-auto max-w-[45%] md:max-h-[420px] ${abs} xl:object-fill`} style={placed(img)} />)}
+    {L.showcaseSvg && <img src={url(L.showcaseSvg.src)} alt="" width={L.showcaseSvg.w} height={L.showcaseSvg.h} class={`h-auto max-h-[420px] w-auto max-w-full ${abs} xl:object-fill`} style={placed(L.showcaseSvg)} />}
   </section>
 
   <!-- Keep exploring -->
   <section aria-label="Keep exploring our products" class="relative isolate pt-12 xl:contents">
     <img
-      src="/assets/products/section-gradient.png"
+      src={url('/assets/products/section-gradient.png')}
       alt=""
       aria-hidden="true"
       class="absolute inset-0 -z-10 h-full w-full object-fill xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-w-none"

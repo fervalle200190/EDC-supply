@@ -1,3 +1,4 @@
+import { url } from '@/lib/url';
 import { useEffect, useRef, useState } from 'react';
 import { toRelative, type RelativeCard } from '@/data/carousel-cards';
 import type { ProductPageLayout } from '@/data/product-layout-types';
@@ -90,10 +91,10 @@ export function RelatedCarousel({ slug, carousel, templates }: RelatedCarouselPr
               className="relative h-[422px] w-[311px] shrink-0 snap-start rounded-[20px] bg-card xl:absolute xl:left-(--x) xl:top-(--y) transition-[transform,box-shadow] duration-300 ease-out hover:z-10 hover:scale-[1.05] hover:shadow-[0_18px_40px_rgba(13,49,71,0.28)] motion-reduce:transition-none motion-reduce:hover:scale-100 xl:transition-[left,transform,box-shadow]"
               style={{ ...placed({ x: slotX(posOf(i)) - winLeft, y: y - winTop }, 0), ...(instant[i] ? { transition: 'none' } : {}) }}
             >
-              <a href={productHref(s)} tabIndex={-1} aria-hidden="true" className="absolute inset-0 z-10 rounded-[20px]" />
+              <a href={url(productHref(s))} tabIndex={-1} aria-hidden="true" className="absolute inset-0 z-10 rounded-[20px]" />
               <Txt spec={rel.title} as="h3" top={0} keepBreaks className={textStyle} />
               <img
-                src={`/assets/products/thumb-${s}.png`}
+                src={url(`/assets/products/thumb-${s}.png`)}
                 alt={name.nameLines.join(' ')}
                 width={rel.image.w}
                 height={rel.image.h}
@@ -101,13 +102,13 @@ export function RelatedCarousel({ slug, carousel, templates }: RelatedCarouselPr
                 style={placed(rel.image, 0)}
               />
               <a
-                href={productHref(s)}
+                href={url(productHref(s))}
                 className="absolute left-(--x) top-(--y) z-20 block whitespace-nowrap text-navy no-underline [font-size:12.2px] [font-weight:500] [line-height:14px]"
                 style={{ '--x': `${rel.link.x}px`, '--y': `${topFromBaseline(rel.link.y + rel.link.h, LINK.size, LINK.lh)}px` } as React.CSSProperties}
               >
                 Learn more
                 <img
-                  src="/assets/shared/arrow-right.png"
+                  src={url('/assets/shared/arrow-right.png')}
                   alt=""
                   width={LINK.arrow}
                   height={LINK.arrow}
