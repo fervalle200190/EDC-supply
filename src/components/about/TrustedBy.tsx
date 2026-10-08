@@ -9,7 +9,7 @@ interface TrustedByProps {
 
 export function TrustedBy({ title, background, clients }: TrustedByProps) {
   return (
-    <section className="relative isolate bg-page px-6 py-16 md:px-10 xl:h-[1423px] xl:p-0">
+    <section className="m-screen relative isolate bg-page px-6 py-16 md:px-10 xl:h-[1423px] xl:p-0">
       <img
         src={url(background)}
         alt=""

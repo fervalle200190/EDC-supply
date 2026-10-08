@@ -10,7 +10,7 @@ interface AboutHeroProps {
 export function AboutHero({ title, image, overlay, lines }: AboutHeroProps) {
   return (
     <section className="relative isolate h-[320px] overflow-hidden bg-navy md:h-[440px] xl:h-[639px]">
-      <img src={url(image)} alt="" className="absolute left-0 top-0 -z-30 h-full w-full object-cover object-left xl:h-[634px]" />
+      <img src={url(image)} alt="" className="absolute left-0 top-0 -z-30 h-full w-full object-cover object-left" />
       <img
         src={url(overlay)}
         alt=""

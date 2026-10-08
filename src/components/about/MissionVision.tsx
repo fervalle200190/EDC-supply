@@ -5,7 +5,7 @@ type MissionVisionProps = typeof missionVision;
 
 export function MissionVision({ background, cards }: MissionVisionProps) {
   return (
-    <section className="relative isolate bg-page px-6 py-16 md:px-10 xl:h-[879px] xl:p-0">
+    <section className="m-screen relative isolate bg-page px-6 py-16 md:px-10 xl:h-[879px] xl:p-0">
       {/* The photo has a white background: blending it with the page colour (background-blend-mode, not mix-blend-mode, which
           glitches under backdrop-filter) merges it into the page, and the opacity keeps the text readable. It is a div so the
           scroll reveal never fades it while the frosted cards sample it. */}

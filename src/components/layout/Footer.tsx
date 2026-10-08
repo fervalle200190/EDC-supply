@@ -22,19 +22,19 @@ interface FooterProps {
 export function Footer({ offsetX = 0, geometry = defaultFooterGeometry }: FooterProps) {
   return (
     <footer className="bg-navy text-white shadow-[0_2px_0_0_var(--color-navy)]" style={{ '--fx': `${offsetX}px`, '--fh': `${geometry.height}px`, '--hr': `${geometry.hrTop}px`, '--cr': `${geometry.copyrightTop}px`, '--fy': `${59 + geometry.shiftY}px` } as React.CSSProperties}>
-      <div className="mx-auto max-w-[1623px] px-6 pb-8 pt-12 md:px-10 xl:relative xl:h-(--fh) xl:p-0">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:ml-[calc(131px+var(--fx))] xl:grid-cols-[310px_368px_375px_1fr] xl:gap-0 xl:pt-(--fy)">
+      <div className="mx-auto max-w-[1623px] px-6 pb-6 pt-16 md:px-10 xl:relative xl:h-(--fh) xl:p-0">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 xl:ml-[calc(131px+var(--fx))] xl:grid-cols-[310px_368px_375px_1fr] xl:gap-0 xl:pt-(--fy)">
           {footerColumns.map((column) => (
             <section key={column.title}>
-              <h3 className="m-0 text-[20px] font-semibold leading-6">{column.title}</h3>
-              <div className="mt-[24px] text-[20px] font-normal leading-6">
+              <h3 className="m-0 text-[15px] font-semibold uppercase leading-5 tracking-[0.06em] xl:text-[20px] xl:leading-6 xl:tracking-normal">{column.title}</h3>
+              <div className="mt-3 text-[14px] font-normal leading-[1.6] text-white/90 xl:mt-[24px] xl:text-[20px] xl:leading-6 xl:text-white">
                 {column.lines.map((line, i) =>
                   typeof line === 'string' ? (
                     <p key={i} className="m-0">{line}</p>
                   ) : (
                     <p key={i} className={`m-0 ${i > 0 ? 'mt-2' : ''}`}>
                       {line.label}
-                      <a href={line.href} className={`text-white no-underline ${line.label.startsWith('Phone') ? 'font-medium' : ''}`}>
+                      <a href={line.href} className={`text-inherit no-underline ${line.label.startsWith('Phone') ? 'font-medium' : ''}`}>
                         {line.strong}
                       </a>
                     </p>
@@ -45,7 +45,7 @@ export function Footer({ offsetX = 0, geometry = defaultFooterGeometry }: Footer
           ))}
         </div>
         <hr className="m-0 mt-10 h-px border-0 bg-[#687e8c] xl:absolute xl:left-[calc(131px+var(--fx))] xl:right-[calc(131px-var(--fx))] xl:top-(--hr) xl:mt-0" />
-        <p className="m-0 py-4 text-center text-[20px] font-normal leading-6 xl:absolute xl:inset-x-0 xl:ml-(--fx) xl:top-(--cr) xl:py-0">{copyright}</p>
+        <p className="m-0 py-4 text-center text-[13px] font-normal leading-5 xl:text-[20px] xl:leading-6 xl:absolute xl:inset-x-0 xl:ml-(--fx) xl:top-(--cr) xl:py-0">{copyright}</p>
       </div>
     </footer>
   );

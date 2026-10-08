@@ -8,7 +8,7 @@ export function PartnerStatement() {
   return (
     <section
       aria-label="Our approach"
-      className="relative px-6 py-16 text-center [overflow-x:clip] md:px-10 xl:z-10 xl:h-(--h) xl:p-0"
+      className="m-screen relative px-6 py-16 text-center [overflow-x:clip] md:px-10 xl:z-10 xl:h-(--h) xl:p-0"
       style={{ '--h': `${height}px` } as React.CSSProperties}
     >
       {/* Pinned to the screen edges (not the 1623px frame) so they never look cut on wide screens. */}

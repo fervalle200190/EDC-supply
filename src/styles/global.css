@@ -136,9 +136,26 @@
 .portfolio-bg {
   background: linear-gradient(to bottom, #f2f2f2 0%, #f2f2f2 34%, #c9d0d4 46%, #8495a0 62%, #4a6577 80%, #0d3147 100%);
 }
+/* Phones: the portfolio and the closing call to action each fill a screen, so the fade sits between them and the CTA
+   reads on solid navy. */
+@media (max-width: 767.98px) {
+  .portfolio-bg {
+    background: linear-gradient(to bottom, #f2f2f2 0%, #f2f2f2 40%, #c9d0d4 47%, #8495a0 54%, #4a6577 61%, #0d3147 70%, #0d3147 100%);
+  }
+}
 @media (min-width: 1280px) {
   .portfolio-bg {
     background: var(--bg-desktop);
+  }
+}
+
+/* Phones: every section gets the screen to itself, its content centred vertically. */
+@media (max-width: 767.98px) {
+  .m-screen {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 

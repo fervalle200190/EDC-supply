@@ -38,6 +38,8 @@ export function StrategicPartner({ partner, technology, decor }: StrategicPartne
         {/* Tablet only: the block art flows between the two copy sections (on desktop it hugs the screen edge above). */}
         <img src={url(decor.blocks.src)} alt="" aria-hidden="true" className="mx-auto hidden h-auto w-[300px] md:block xl:hidden" />
 
+        {/* Phones: each copy block gets a screen of its own. */}
+        <div className="m-screen flex flex-col gap-12 xl:contents">
         <h2 className="m-0 text-[34px] font-bold leading-[1.15] text-navy md:text-[44px] xl:absolute xl:left-[131px] xl:top-[221px] xl:text-[49.96px] xl:leading-[49px]">
           <Lines lines={partner.title} />
         </h2>
@@ -46,8 +48,10 @@ export function StrategicPartner({ partner, technology, decor }: StrategicPartne
             <p key={p.slice(0, 24)} className={bodyClass}>{p}</p>
           ))}
         </div>
+        </div>
 
 
+        <div className="m-screen flex flex-col gap-12 xl:contents">
         <h2 className="m-0 text-center text-[34px] font-bold leading-[1.15] text-navy md:text-[44px] xl:absolute xl:left-[789px] xl:top-[983px] xl:w-[703px] xl:text-[49.8px] xl:leading-[50px]">
           <Lines lines={technology.title} />
         </h2>
@@ -55,6 +59,7 @@ export function StrategicPartner({ partner, technology, decor }: StrategicPartne
           {technology.paragraphs.map((p) => (
             <p key={p.slice(0, 24)} className={bodyClass}>{p}</p>
           ))}
+        </div>
         </div>
       </div>
     </section>

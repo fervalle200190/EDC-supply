@@ -11,7 +11,7 @@ interface FlagshipBannerProps {
 
 export function FlagshipBanner({ title, subtitle, tagline, cta, image }: FlagshipBannerProps) {
   return (
-    <section className="relative z-10 bg-teal-band xl:h-[370px]">
+    <section className="m-screen relative z-10 bg-teal-band xl:h-[370px]">
       <div className="mx-auto max-w-[1623px] px-6 py-12 md:px-10 xl:relative xl:h-full xl:p-0">
         <img
           src={url(image)}

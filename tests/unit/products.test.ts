@@ -98,3 +98,18 @@ describe('product page layouts', () => {
     expect(missing).toEqual([]);
   });
 });
+
+describe('showcase trim boxes', () => {
+  it('exist for every raster showcase picture and stay inside the file', async () => {
+    const { productPageLayouts } = await import('@/data/product-layouts');
+    const { showcaseTrim } = await import('@/data/showcase-trim');
+    for (const L of Object.values(productPageLayouts)) {
+      for (const img of L.showcase) {
+        const t = showcaseTrim[img.src];
+        expect(t, `run "node scripts/showcase-trim.mjs" after adding ${img.src}`).toBeDefined();
+        expect(t!.x + t!.w).toBeLessThanOrEqual(t!.width);
+        expect(t!.y + t!.h).toBeLessThanOrEqual(t!.height);
+      }
+    }
+  });
+});

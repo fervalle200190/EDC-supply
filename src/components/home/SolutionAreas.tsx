@@ -9,7 +9,7 @@ interface SolutionAreasProps {
 
 export function SolutionAreas({ title, areas }: SolutionAreasProps) {
   return (
-    <section className="relative bg-page px-6 py-16 md:px-10 xl:h-[909px] xl:p-0">
+    <section className="m-screen relative bg-page px-6 py-16 md:px-10 xl:h-[909px] xl:p-0">
       <img
         src={url('/assets/home/squiggles.svg')}
         alt=""

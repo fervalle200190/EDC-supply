@@ -44,6 +44,8 @@ export function PortfolioCarousel({ title, items }: PortfolioCarouselProps) {
       style={{ '--bg-desktop': portfolioLayout.background, '--h': `${sectionTops.footer - sectionTops.portfolio}px` } as React.CSSProperties}
     >
       <div className="mx-auto max-w-[1623px] xl:relative xl:h-full">
+        {/* Phones: title + cards take one screen, the closing call to action the next. */}
+        <div className="m-screen relative xl:contents">
         <PlacedLines
           block={portfolioTitleBlock}
           sectionTop={sectionTops.portfolio}
@@ -107,8 +109,10 @@ export function PortfolioCarousel({ title, items }: PortfolioCarouselProps) {
           <Chevron dir="right" />
         </button>
 
+        </div>
+
         {/* Closing call to action, drawn on the same gradient. */}
-        <div className="mt-16 text-center text-page xl:mt-0 xl:text-left">
+        <div className="m-screen mt-16 text-center text-page max-md:mt-0 max-md:items-center xl:mt-0 xl:text-left">
           <PlacedLines
             block={closingCta.title}
             sectionTop={sectionTops.portfolio}

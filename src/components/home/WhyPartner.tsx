@@ -9,7 +9,7 @@ interface WhyPartnerProps {
 
 export function WhyPartner({ title, items }: WhyPartnerProps) {
   return (
-    <section className="relative isolate overflow-hidden px-6 py-16 md:px-10 xl:h-[672px] xl:p-0">
+    <section className="m-screen relative isolate overflow-hidden px-6 py-16 md:px-10 xl:h-[672px] xl:p-0">
       <img src={url(assets.home.whyBg)} alt="" className="absolute left-0 top-0 -z-20 h-full w-full object-cover xl:-left-[82px] xl:w-[max(1973px,calc(100%+82px))]" />
       <div className="absolute inset-0 -z-10 bg-page/90" />
 

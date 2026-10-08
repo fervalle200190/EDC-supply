@@ -6,7 +6,7 @@ type BasedInFloridaProps = typeof basedInFlorida;
 /** The artwork already carries the visible headline, so the text is exposed to assistive tech only. */
 export function BasedInFlorida({ image, title, subtitle }: BasedInFloridaProps) {
   return (
-    <section className="relative w-full overflow-hidden bg-page xl:h-[795px]">
+    <section className="m-screen relative w-full overflow-hidden bg-page xl:h-[795px]">
       <img
         src={url(image)}
         alt="Map highlighting the Americas, with Doral, Florida marked"
