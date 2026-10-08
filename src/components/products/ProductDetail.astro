@@ -31,6 +31,20 @@ const linesClip = hero.lines
   ? `inset(${Math.max(0, hero.photo.y - hero.lines.y)}px 0 ${Math.max(0, hero.lines.y + LINES.h - heroBottom)}px 0)`
   : undefined;
 
+// Below desktop the hero photo is cropped to a tall box (object-cover): frame it on the product, not on the empty navy
+// left side. Values are tuned for a ~390x640 phone hero (product centred) and stay reasonable on tablets.
+const heroFocus: Record<string, string> = {
+  'surge-protection-devices': '88% center',
+  'active-harmonic-filters': '85% center',
+  'power-quality-compensators': '76% center',
+  'uninterruptible-power-supplies': '79% center',
+  'passive-harmonic-filters': '86% center',
+  'fire-pump-controllers': '84% center',
+  'nickel-cadmium-and-lead-acid-batteries': '82% center',
+  'machine-health-monitoring': '80% center',
+};
+const objectPosition = heroFocus[slug] ?? '75% center';
+
 // Phones: pictures stack top-to-bottom in their left-to-right order, cropped to the product (no transparent padding),
 // full width but never taller than ~60% of the screen.
 const showcase = [...L.showcase].sort((a, b) => a.x - b.x).map((img) => {
@@ -60,11 +74,16 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
 
 <div class="relative xl:[overflow-x:clip]" style={{ '--hh': `${heroBottom - STAGE_TOP}px`, '--h': `${L.footerTop - STAGE_TOP}px`, '--ctop': `${STAGE_TOP - restTop}px`, '--ch': `${L.footerTop - restTop}px` }}>
   <!-- Hero -->
-  <section class="m-screen relative isolate flex flex-col items-center gap-6 overflow-hidden bg-navy px-6 py-16 text-center md:px-10 md:py-24 xl:contents">
+  <section class="m-screen m-screen-end relative isolate flex flex-col items-center gap-6 overflow-hidden bg-navy px-6 py-16 text-center md:px-10 md:py-24 xl:contents">
     {
       hero.photo.crop ? (
         <div class="absolute inset-0 -z-20 overflow-hidden xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[calc(max(var(--w),100%)+24px)]" style={placed(hero.photo)}>
-          <img src={url(hero.photo.src)} alt="" class="absolute left-0 max-w-none object-fill" style={{ top: `${hero.photo.crop.y}px`, width: `max(${hero.photo.crop.w}px, 100%)`, height: 'auto', aspectRatio: `${hero.photo.crop.w} / ${hero.photo.crop.h}` }} />
+          <img
+            src={url(hero.photo.src)}
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover xl:inset-auto xl:left-0 xl:top-(--cy) xl:aspect-(--car) xl:h-auto xl:w-[max(var(--cw),100%)] xl:max-w-none xl:object-fill"
+            style={{ objectPosition, '--cy': `${hero.photo.crop.y}px`, '--cw': `${hero.photo.crop.w}px`, '--car': `${hero.photo.crop.w} / ${hero.photo.crop.h}` }}
+          />
         </div>
       ) : (
         <img
@@ -73,11 +92,11 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
           width={hero.photo.w}
           height={hero.photo.h}
           class="absolute inset-0 -z-20 h-full w-full object-cover xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[calc(max(var(--w),100%)+24px)] xl:max-w-none xl:object-fill"
-          style={placed(hero.photo)}
+          style={{ ...placed(hero.photo), objectPosition }}
         />
       )
     }
-    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/65 xl:hidden"></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/65 max-md:bg-transparent max-md:bg-linear-to-t max-md:from-navy max-md:from-25% max-md:via-navy/75 max-md:via-55% max-md:to-navy/0 xl:hidden"></div>
     {hero.overlay && <img src={url(hero.overlay.src)} alt="" aria-hidden="true" class={`hidden xl:block ${bleed} xl:object-fill`} style={placed({ ...hero.overlay, ...photoBox })} />}
     {hero.cssGradient && <div aria-hidden="true" class={`hidden xl:block ${bleed}`} style={{ ...placed({ ...hero.cssGradient, ...photoBox }), background: hero.cssGradient.background }}></div>}
     {hero.lines && <img src={url('/assets/products/hero-lines.svg')} alt="" aria-hidden="true" class={`hidden xl:block xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-w-none`} style={{ ...placed({ ...hero.lines, ...LINES }), clipPath: linesClip }} />}

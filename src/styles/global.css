@@ -157,6 +157,10 @@
     flex-direction: column;
     justify-content: center;
   }
+  /* Heroes: copy at the bottom, so the product photo shows above it. */
+  .m-screen.m-screen-end {
+    justify-content: flex-end;
+  }
 }
 
 /* ───────── Scroll reveal (driven by /scripts/reveal.js) ─────────

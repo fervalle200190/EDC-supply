@@ -8,16 +8,16 @@ import { placed } from './layout';
 
 <div class="relative xl:[overflow-x:clip]">
   <!-- Hero (measured on the 1623px Figma frame) -->
-  <section class="m-screen relative isolate flex min-h-[260px] items-center justify-center overflow-hidden bg-navy px-6 py-16 text-center md:min-h-[340px] xl:block xl:h-[636px] xl:p-0">
+  <section class="m-screen m-screen-end relative isolate flex min-h-[260px] items-center justify-center overflow-hidden bg-navy px-6 py-16 text-center md:min-h-[340px] xl:block xl:h-[636px] xl:p-0">
     <img
       src={url(L.hero.src)}
       alt=""
       width={L.hero.w}
       height={L.hero.h}
-      class="absolute inset-0 -z-10 h-full w-full object-cover object-right xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-w-none xl:object-fill"
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-[93%_center] xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-w-none xl:object-fill"
       style={placed(L.hero)}
     />
-    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/45 xl:hidden"></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/45 max-md:bg-transparent max-md:bg-linear-to-t max-md:from-navy max-md:from-15% max-md:via-navy/60 max-md:via-40% max-md:to-navy/0 xl:hidden"></div>
     <Txt spec={L.heroTitle} as="h1" centered className="relative text-[36px] font-bold leading-tight text-page md:text-[56px]" />
   </section>
 
