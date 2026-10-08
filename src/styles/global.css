@@ -149,10 +149,10 @@
   }
 }
 
-/* Phones: every section gets the screen to itself, its content centred vertically. */
+/* Phones: every section gets (most of) the screen to itself, its content centred vertically. */
 @media (max-width: 767.98px) {
   .m-screen {
-    min-height: 100svh;
+    min-height: 90svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
