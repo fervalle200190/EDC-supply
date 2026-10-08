@@ -60,7 +60,7 @@ const bleed = 'xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(-
 
 <div class="relative xl:[overflow-x:clip]" style={{ '--hh': `${heroBottom - STAGE_TOP}px`, '--h': `${L.footerTop - STAGE_TOP}px`, '--ctop': `${STAGE_TOP - restTop}px`, '--ch': `${L.footerTop - restTop}px` }}>
   <!-- Hero -->
-  <section class="relative isolate flex flex-col items-center gap-6 overflow-hidden bg-navy px-6 py-16 text-center md:px-10 md:py-24 xl:contents">
+  <section class="m-screen relative isolate flex flex-col items-center gap-6 overflow-hidden bg-navy px-6 py-16 text-center md:px-10 md:py-24 xl:contents">
     {
       hero.photo.crop ? (
         <div class="absolute inset-0 -z-20 overflow-hidden xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[calc(max(var(--w),100%)+24px)]" style={placed(hero.photo)}>
