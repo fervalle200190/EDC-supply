@@ -14,9 +14,10 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const isValidMessage = (m: ContactMessage) =>
   [m.firstName, m.lastName, m.subject, m.message].every((v) => v.trim().length > 0) && emailPattern.test(m.email.trim());
 
-// Phones use the site's 16px body size (which also keeps iOS from zooming into a focused field); desktop keeps the design.
+// Phones use the site's 16px body size (which also keeps iOS from zooming into a focused field) with 14px placeholders;
+// desktop keeps the design.
 const field =
-  'block h-[50px] w-full rounded-[12px] border border-navy bg-transparent px-4 text-[16px] font-medium md:h-[59px] md:rounded-[15px] md:px-[19px] md:text-[18px] xl:text-[20px] leading-none text-black outline-none transition-shadow placeholder:text-black focus:shadow-[0_0_0_3px_rgba(48,124,142,0.35)] xl:absolute xl:left-(--x) xl:top-(--y) xl:w-[696px]';
+  'block h-[50px] w-full rounded-[12px] border border-navy bg-transparent px-4 text-[16px] font-medium md:h-[59px] md:rounded-[15px] md:px-[19px] md:text-[18px] xl:text-[20px] leading-none text-black outline-none transition-shadow placeholder:text-black max-md:placeholder:text-[14px] focus:shadow-[0_0_0_3px_rgba(48,124,142,0.35)] xl:absolute xl:left-(--x) xl:top-(--y) xl:w-[696px]';
 
 const at = (x: number, y: number, extra: Record<string, string> = {}) => ({ '--x': `${x}px`, '--y': `${y}px`, ...extra }) as CSSProperties;
 
@@ -92,7 +93,7 @@ export function ContactForm({ endpoint }: ContactFormProps) {
             name="subject"
             required
             defaultValue=""
-            className={cn(field, 'cursor-pointer appearance-none bg-[length:14px_8px] bg-[position:right_16px_center] md:bg-[position:right_20px_center] bg-no-repeat invalid:text-black')}
+            className={cn(field, 'cursor-pointer appearance-none bg-[length:14px_8px] bg-[position:right_16px_center] md:bg-[position:right_20px_center] bg-no-repeat invalid:text-black max-md:invalid:text-[14px]')}
             style={{ ...at(fields[4].x, fields[4].y), backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' fill='none'%3E%3Cpath d='m1 1 6 6 6-6' stroke='%230d3147' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")" }}
           >
             <option value="" disabled>
