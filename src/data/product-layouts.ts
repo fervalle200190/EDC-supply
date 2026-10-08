@@ -29,10 +29,6 @@ export const productPageLayouts: Record<string, ProductPageLayout> = {
         "y": 130,
         "w": 1654,
         "h": 681
-      },
-      "lines": {
-        "x": -88,
-        "y": 111
       }
     },
     "title": {
@@ -342,10 +338,6 @@ export const productPageLayouts: Record<string, ProductPageLayout> = {
         "y": 160,
         "w": 1664,
         "h": 685
-      },
-      "lines": {
-        "x": -101,
-        "y": 120
       }
     },
     "title": {
@@ -643,19 +635,10 @@ export const productPageLayouts: Record<string, ProductPageLayout> = {
     "hero": {
       "photo": {
         "src": "/assets/products/power-quality-compensators/hero.jpg",
-        "x": -1,
-        "y": 128,
-        "w": 1626.64,
-        "h": 637.3,
-        "crop": {
-          "w": 1639.6,
-          "h": 1161.5,
-          "y": -198.3
-        }
-      },
-      "lines": {
-        "x": -97,
-        "y": 132
+        "x": 0,
+        "y": 117,
+        "w": 1694,
+        "h": 671
       },
       "cssGradient": {
         "x": -7,
@@ -963,10 +946,6 @@ export const productPageLayouts: Record<string, ProductPageLayout> = {
         "y": 128,
         "w": 1623,
         "h": 641
-      },
-      "lines": {
-        "x": -97,
-        "y": 132
       }
     },
     "title": {
@@ -1276,10 +1255,6 @@ export const productPageLayouts: Record<string, ProductPageLayout> = {
         "y": 144,
         "w": 1654,
         "h": 655
-      },
-      "lines": {
-        "x": -77,
-        "y": 144
       }
     },
     "title": {

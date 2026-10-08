@@ -23,20 +23,16 @@ const heroBottom = hero.photo.y + hero.photo.h;
 const featuresBottom = Math.max(...L.features.map((f) => f.description.top + f.description.lines.length * f.description.lh));
 const restTop = Math.round(featuresBottom + 60);
 
-// The hero's overlay, gradient and squiggles are drawn a few px taller than the photo in the design; they must never
-// spill outside it (a strip of gradient showed above/below the picture). Overlays take the photo's box, the lines are clipped.
+// The hero's overlay and gradient are drawn a few px taller than the photo in the design; they must never spill
+// outside it (a strip of gradient showed above/below the picture), so they take the photo's box.
 const photoBox = { y: hero.photo.y, h: hero.photo.h };
-const LINES = { w: 248.33, h: 696.81 };
-const linesClip = hero.lines
-  ? `inset(${Math.max(0, hero.photo.y - hero.lines.y)}px 0 ${Math.max(0, hero.lines.y + LINES.h - heroBottom)}px 0)`
-  : undefined;
 
 // Below desktop the hero photo is cropped to a tall box (object-cover): frame it on the product, not on the empty navy
 // left side. Values are tuned for a ~390x640 phone hero (product centred) and stay reasonable on tablets.
 const heroFocus: Record<string, string> = {
   'surge-protection-devices': '88% center',
   'active-harmonic-filters': '85% center',
-  'power-quality-compensators': '76% center',
+  'power-quality-compensators': '80% center',
   'uninterruptible-power-supplies': '79% center',
   'passive-harmonic-filters': '86% center',
   'fire-pump-controllers': '84% center',
@@ -46,18 +42,7 @@ const heroFocus: Record<string, string> = {
 const objectPosition = heroFocus[slug] ?? '75% center';
 
 // Screens wider than the design: the photo keeps its drawn size (never stretched or zoomed) and sticks to the right
-// edge; the strip on its left takes the colour of the photo's left edge, which every photo fades to (navy).
-const heroEdge: Record<string, string> = {
-  'surge-protection-devices': '#0b354e',
-  'active-harmonic-filters': '#0a334f',
-  'power-quality-compensators': '#0d3147',
-  'uninterruptible-power-supplies': '#0a2f49',
-  'passive-harmonic-filters': '#0a344d',
-  'fire-pump-controllers': '#022e4b',
-  'nickel-cadmium-and-lead-acid-batteries': '#103045',
-  'machine-health-monitoring': '#0f334b',
-};
-const edge = heroEdge[slug] ?? '#0d3147';
+// edge; the strip on its left shows a mirrored copy of the photo and its gradient, so the navy fade continues seamlessly.
 /** Photo width on desktop, plus 24px past the right edge (clipped) so the photos' feathered right edge never shows. */
 const photoW = (hero.photo.crop?.w ?? hero.photo.w) + 24;
 /** Left edge: the design's x, or further right so the photo ends at the screen edge. */
@@ -91,7 +76,6 @@ const zoomable = 'transition-transform duration-300 ease-out hover:scale-[1.05] 
 <div class="relative xl:[overflow-x:clip]" style={{ '--pw': `${photoW}px`, '--hh': `${heroBottom - STAGE_TOP}px`, '--h': `${L.footerTop - STAGE_TOP}px`, '--ctop': `${STAGE_TOP - restTop}px`, '--ch': `${L.footerTop - restTop}px` }}>
   <!-- Hero -->
   <section class="m-screen m-screen-end relative isolate flex flex-col items-center gap-6 overflow-hidden bg-navy px-6 py-16 text-center md:px-10 md:py-24 xl:contents">
-    <div aria-hidden="true" class="hidden xl:absolute xl:inset-x-0 xl:top-(--y) xl:block xl:h-(--h)" style={{ ...placed(hero.photo), background: edge }}></div>
     {
       hero.photo.crop ? (
         <div class={`absolute inset-0 -z-20 overflow-hidden xl:inset-auto xl:z-0 xl:top-(--y) xl:h-(--h) xl:w-(--pw) ${anchored}`} style={placed(hero.photo)}>
@@ -116,7 +100,24 @@ const zoomable = 'transition-transform duration-300 ease-out hover:scale-[1.05] 
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/65 max-md:bg-transparent max-md:bg-linear-to-t max-md:from-navy max-md:from-25% max-md:via-navy/75 max-md:via-55% max-md:to-navy/0 xl:hidden"></div>
     {hero.overlay && <img src={url(hero.overlay.src)} alt="" aria-hidden="true" class={`hidden xl:block xl:absolute xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-w-none xl:object-fill ${anchored}`} style={placed({ ...hero.overlay, ...photoBox })} />}
     {hero.cssGradient && <div aria-hidden="true" class={`hidden xl:block xl:absolute xl:top-(--y) xl:h-(--h) xl:w-(--w) ${anchored}`} style={{ ...placed({ ...hero.cssGradient, ...photoBox }), background: hero.cssGradient.background }}></div>}
-    {hero.lines && <img src={url('/assets/products/hero-lines.svg')} alt="" aria-hidden="true" class={`hidden xl:block xl:absolute xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-w-none`} style={{ ...placed({ ...hero.lines, ...LINES }), clipPath: linesClip }} />}
+    {/* Mirrored copy left of the photo (wide screens). It overlaps the photo by 3px and skips the photo's first 3px columns,
+        which are lighter in some files and would draw a seam. Kept out of the scroll reveal: mostly off-screen, it would never
+        reach the reveal threshold and stay invisible. */}
+    <div aria-hidden="true" data-no-reveal class="hidden xl:absolute xl:left-0 xl:top-(--y) xl:z-0 xl:block xl:h-(--h) xl:w-[max(0px,calc(100%-var(--pw)+3px))] xl:overflow-hidden" style={placed(hero.photo)}>
+      <div class="absolute -right-[3px] top-0 h-full w-(--pw) [transform:scaleX(-1)]">
+        {
+          hero.photo.crop ? (
+            <img src={url(hero.photo.src)} alt="" class="absolute left-0 h-auto max-w-none" style={{ top: `${hero.photo.crop.y}px`, width: `${hero.photo.crop.w}px`, aspectRatio: `${hero.photo.crop.w} / ${hero.photo.crop.h}` }} />
+          ) : (
+            <img src={url(hero.photo.src)} alt="" class="absolute inset-0 h-full w-full max-w-none object-fill" />
+          )
+        }
+        {hero.overlay && <img src={url(hero.overlay.src)} alt="" class="absolute left-0 top-0 h-full max-w-none object-fill" style={{ width: `${hero.overlay.w}px` }} />}
+        {hero.cssGradient && <div class="absolute left-0 top-0 h-full" style={{ width: `${hero.cssGradient.w}px`, background: hero.cssGradient.background }}></div>}
+      </div>
+      {/* Further out the mirror settles into solid navy, so no mirrored machinery shows on very wide screens. */}
+      <div class="absolute inset-0 [background:linear-gradient(to_left,rgb(13_49_71/0)_0px,#0d3147_420px)]"></div>
+    </div>
 
     <Txt spec={L.title} as="h1" centered className="relative text-[34px] font-bold leading-[1.1] text-page md:text-[48px]" />
     <Txt spec={L.subtitle} centered className="relative max-w-[560px] text-[18px] font-medium leading-[1.4] text-page md:text-[20px]" />
@@ -146,8 +147,10 @@ const zoomable = 'transition-transform duration-300 ease-out hover:scale-[1.05] 
     </div>
   </section>
 
+  {/* The re-based block starts above its own box (negative top) and would cover the hero: it lets clicks through, its
+      sections take them again. */}
   <div class="contents xl:relative xl:block xl:h-(--ch)">
-  <div class="contents xl:absolute xl:inset-x-0 xl:top-(--ctop) xl:block xl:h-(--h)">
+  <div class="contents xl:pointer-events-none xl:absolute xl:inset-x-0 xl:top-(--ctop) xl:block xl:h-(--h) xl:*:pointer-events-auto">
 
   <!-- Product showcase -->
   <section aria-label="Product range" class="m-screen flex flex-col items-center justify-center gap-10 px-6 py-12 md:px-10 xl:contents">

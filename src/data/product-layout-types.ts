@@ -50,8 +50,6 @@ export interface ProductPageLayout {
     overlay?: PlacedImage;
     /** CSS gradient laid over the photo instead of the PNG overlay (Power Quality Compensators). */
     cssGradient?: { x: number; y: number; w: number; h: number; background: string };
-    /** Decorative squiggle lines on the left edge. */
-    lines?: { x: number; y: number };
   };
   title: PlacedText;
   subtitle: PlacedText;

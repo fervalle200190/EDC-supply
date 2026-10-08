@@ -92,3 +92,18 @@ for (const route of ['/', '/contact', '/products']) {
     expect(onTop, 'the menu link is the topmost element at its position').toBe(true);
   });
 }
+
+/** Every product hero's "Request a quote" button must be clickable (nothing may sit on top of it), on any screen. */
+const productSlugs = allPages.filter((p) => p.name.startsWith('product-')).map((p) => p.route);
+for (const width of [390, 1623, 2560]) {
+  test(`"Request a quote" is clickable on every product page at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of productSlugs) {
+      await page.goto(route, { waitUntil: 'networkidle' });
+      const link = page.getByRole('link', { name: 'Request a quote' });
+      const box = (await link.boundingBox())!;
+      const onTop = await page.evaluate(([x, y]) => document.elementFromPoint(x!, y!)?.closest('a')?.textContent?.trim(), [box.x + box.width / 2, box.y + box.height / 2]);
+      expect(onTop, `${route} at ${width}px`).toBe('Request a quote');
+    }
+  });
+}
