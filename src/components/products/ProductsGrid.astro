@@ -7,14 +7,14 @@ import { placed } from './layout';
 ---
 
 <div class="relative xl:[overflow-x:clip]">
-  <!-- Hero (measured on the 1623px Figma frame) -->
+  <!-- Hero (measured on the 1623px Figma frame). Wider screens: the photo keeps its size against the right edge, navy fills the left. -->
   <section class="m-screen m-screen-end relative isolate flex min-h-[260px] items-center justify-center overflow-hidden bg-navy px-6 py-16 text-center md:min-h-[340px] xl:block xl:h-[636px] xl:p-0">
     <img
       src={url(L.hero.src)}
       alt=""
       width={L.hero.w}
       height={L.hero.h}
-      class="absolute inset-0 -z-10 h-full w-full object-cover object-[93%_center] xl:inset-auto xl:z-0 xl:left-(--x) xl:top-(--y) xl:h-(--h) xl:w-[max(var(--w),100%)] xl:max-w-none xl:object-fill"
+      class="absolute inset-0 -z-10 h-full w-full object-cover object-[93%_center] xl:inset-auto xl:z-0 xl:left-[max(var(--x),calc(100%-var(--w)))] xl:top-(--y) xl:h-(--h) xl:w-(--w) xl:max-w-none xl:object-fill"
       style={placed(L.hero)}
     />
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-navy/45 max-md:bg-transparent max-md:bg-linear-to-t max-md:from-navy max-md:from-15% max-md:via-navy/60 max-md:via-40% max-md:to-navy/0 xl:hidden"></div>
