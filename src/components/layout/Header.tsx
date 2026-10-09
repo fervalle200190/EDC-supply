@@ -40,7 +40,7 @@ export function Header({ currentPath, height = HEADER_HEIGHT, variant = 'light' 
     <header className={`relative xl:h-(--hh) ${dark ? 'bg-navy' : 'bg-page'}`} style={{ '--hh': `${height}px` } as React.CSSProperties}>
       <div className={`mx-auto flex h-[84px] max-w-[1623px] items-center justify-between px-6 md:px-10 xl:h-[128px] xl:items-center xl:pl-[80px] xl:pr-[80px]`}>
         <a href={url('/')} aria-label="EDC Supply – Power Solutions" className="block">
-          <img src={url(assets.logo)} alt="EDC Supply Power Solutions" width={151} height={43} className={`h-[38px] w-auto xl:h-[43px] ${dark ? 'brightness-0 invert' : ''}`} />
+          <img src={url(assets.logo)} alt="EDC Supply Power Solutions" width={151} height={43} className={`h-[44px] w-auto xl:h-[52px] ${dark ? 'brightness-0 invert' : ''}`} />
         </a>
 
         <button

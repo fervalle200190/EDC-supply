@@ -148,7 +148,7 @@ export interface PortfolioItem {
   size: { w: number; h: number };
 }
 
-export const portfolioTitle = 'Complete energy & power quality portfolio';
+export const portfolioTitle = 'Explore Our Product Portfolio';
 export const portfolioItems: readonly PortfolioItem[] = products.map((p) => ({
   title: (p.cardNameLines ?? p.nameLines).join('\n'),
   image: p.thumb,

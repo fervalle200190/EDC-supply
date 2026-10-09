@@ -133,7 +133,7 @@ describe('SolutionAreas', () => {
 
 describe('PortfolioCarousel', () => {
   it('renders the cards and navigation buttons', () => {
-    render(<PortfolioCarousel title="Complete energy & power quality portfolio" items={portfolioItems} />);
+    render(<PortfolioCarousel title="Explore Our Product Portfolio" items={portfolioItems} />);
     expect(screen.getAllByRole('link', { name: /Learn more/ })).toHaveLength(portfolioItems.length);
     expect(screen.getByRole('button', { name: 'Previous' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();

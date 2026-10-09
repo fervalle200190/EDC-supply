@@ -49,7 +49,7 @@ export const partnerStatement = {
 
 export const portfolioTitleBlock: PlacedBlock = {
   size: 29.95, weight: 600, lh: 35.9, top: 3668.4,
-  lines: [{ text: 'Complete energy & power quality portfolio', left: 127.7 }],
+  lines: [{ text: 'Explore Our Product Portfolio', left: 127.7 }],
 };
 
 export const portfolioLayout = {
